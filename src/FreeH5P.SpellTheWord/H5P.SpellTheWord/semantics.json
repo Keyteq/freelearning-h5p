@@ -1,0 +1,21 @@
+[
+  {
+    "label": "Greeting text",
+    "name": "greeting",
+    "type": "text",
+    "description": "The greeting text displayed before the word"
+  },
+  {
+    "label": "Image clue",
+    "name": "image",
+    "type": "image",
+    "optional": true,
+    "description": "An image shown before the letters to help the user."
+  },
+  {
+    "label": "Word",
+    "name": "word",
+    "type": "text",
+    "description": "The word that the user will be asked to spell"
+  }
+]

@@ -1,0 +1,41 @@
+.freeh5p-spelltheword {
+  padding: 16px;
+}
+
+.letter-boxes {
+  padding: 8px;
+  display: flex;
+  flex-wrap: nowrap;
+  width: auto;
+}
+
+.letter-box {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  margin-right: 8px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 8px rgba(24, 27, 94, 0.07);
+  border: 1px solid #e7e7e7;
+}
+
+  .letter-box--blank {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+  }
+
+  .letter-box--drag {
+    background: #1F2B52;
+    color: #fff;
+    text-align: center;
+    line-height: 36px;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .letter-box--drag:hover {
+    cursor: move; 
+  }

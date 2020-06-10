@@ -1,0 +1,25 @@
+{
+  "title": "Spell the word",
+  "language": "en",
+  "author": "Norad",
+  "license": "CC BY-SA",
+  "licenseVersion": "4.0",
+  "authors":[{
+    "name":"Robert Fohlin",
+    "role":"Developer"
+  }],
+  "preloadedDependencies": [
+    {
+      "machineName": "jQuery.ui",
+      "majorVersion": 1,
+      "minorVersion": 10
+    },
+    {
+      "machineName": "H5P.SpellTheWord",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ],
+  "mainLibrary": "H5P.SpellTheWord",
+  "embedTypes": ["div"]
+}
