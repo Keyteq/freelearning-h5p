@@ -1,6 +1,6 @@
 // import * as $ from 'jquery';
-import utils from 'utils';
 import Letter from './letter';
+import { shuffleArray } from './helpers';
 declare var H5P: any;
 // declare var H5PIntegration: any;
 
@@ -9,6 +9,7 @@ const $ = H5P.jQuery;
 export default class SpellTheWord extends (H5P.EventDispatcher as { new(): any; }) {
   letters: Letter[] = [];
   randomised: Letter[] = [];
+  correctSpelling: string[] = [];
   /* @constructor */
   constructor(config: any, contentId: string, contentData: any = {}) {
     super();
@@ -24,12 +25,10 @@ export default class SpellTheWord extends (H5P.EventDispatcher as { new(): any; 
     $wrapper.get(0).appendChild(document.createElement('div'));
     // Get letters from type config
     const letters = this.config.word.split('');
+    this.correctSpelling = letters;
     for (let i = 0; i < letters.length; i = i + 1) {
-      this.letters.push(new Letter(letters[i], i));
+      this.letters.push(new Letter(letters[i]));
     }
-    console.log(utils);
-    // this.randomised = shuffleArray(this.letters);
-    console.log(this.letters);
-    // console.log(this.randomised);
+    this.randomised = shuffleArray(this.letters);
   }
 }

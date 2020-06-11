@@ -1,10 +1,8 @@
 class Letter {
   letter: string;
-  truePosition: number;
   randomPosition: number;
-  constructor(letter: string, truePosition?: number) {
+  constructor(letter: string) {
     this.letter = letter;
-    this.truePosition = truePosition;
   }
 }
 
