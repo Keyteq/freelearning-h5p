@@ -13,7 +13,7 @@
     "minorVersion": 0
   },
   "preloadedJs": [
-    { "path": "main.js" }
+    { "path": "dist/bundle.js" }
   ],
   "preloadedCss": [
     {"path": "style.css"}
