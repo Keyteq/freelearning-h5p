@@ -28,17 +28,6 @@ H5P.SpellTheWord = (function ($) {
     }, options);
     // Keep provided id.
     this.id = id;
-    if (this.options.task) {
-      console.log('initialize task');
-      // Initialize task
-      this.task = H5P.newRunnable(this.options.task, this.id);
-      // Trigger resize events on the task:
-      this.on('resize', function (event) {
-        this.task.trigger('resize', event);
-      });
-    }
-
-    console.log(this);
   };
 
   /**
@@ -48,7 +37,6 @@ H5P.SpellTheWord = (function ($) {
    * @param {jQuery} $container
    */
   C.prototype.attach = function ($container) {
-    console.log($.fn.jquery);
     // Set class on container to identify it as a greeting card
     // container.  Allows for styling later.
     $container.addClass("freeh5p-spelltheword");
@@ -62,14 +50,13 @@ H5P.SpellTheWord = (function ($) {
     var letters = this.options.word.split('');
     for (var i = 0; i < letters.length; i = i + 1) {
       var boxClass = 'letter-box';
-      // console.log(letters[i]);
       if (letters[i] == ' ') {
         boxClass += ' letter-box--blank';
-        // console.log(boxClass);
+      } else {
+        boxClass += '  letter-box--snap';
       }
       lettersHTML += '<div class="' + boxClass + '"></div>';
     }
-    // console.log(letters);
     lettersHTML += '</div>';
     $container.append(lettersHTML);
     // Generate the draggable letters
@@ -77,14 +64,14 @@ H5P.SpellTheWord = (function ($) {
     var randomisedOrder = shuffleArray(letters);
     for (var i = 0; i < randomisedOrder.length; i = i + 1) {
       var letter = randomisedOrder[i];
-      console.log(letter);
       dragLettersHTML += '<div class="letter-box letter-box--drag">' + letter + '</div>';
     }
     dragLettersHTML += '</div>';
     $container.append(dragLettersHTML);
 
-    H5P.jQuery('.letter-box--drag').draggable();
-    console.log(H5P.jQuery);
+    H5P.jQuery('.letter-box--drag').draggable({
+      snap: '.letter-box--snap'
+    });
   };
 
   return C;
