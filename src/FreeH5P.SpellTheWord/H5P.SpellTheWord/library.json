@@ -20,10 +20,7 @@
   ],
   "preloadedDependencies": [
     {
-      "machineName": "jQuery.ui",
-      "majorVersion": 1,
-      "minorVersion": 10,
-      "defaultStyles": true
+      "machineName": "jQuery.ui", "majorVersion": 1, "minorVersion": 10
     }
   ]
 }

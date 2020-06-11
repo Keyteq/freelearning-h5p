@@ -1,12 +1,9 @@
 var H5P = H5P || {};
-var oldJQuery = jQuery;
-jQuery = H5P.jQuery;
 
 function shuffleArray(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
-
     // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
@@ -16,7 +13,6 @@ function shuffleArray(array) {
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
-
   return array;
 }
 
@@ -33,6 +29,7 @@ H5P.SpellTheWord = (function ($) {
     // Keep provided id.
     this.id = id;
     if (this.options.task) {
+      console.log('initialize task');
       // Initialize task
       this.task = H5P.newRunnable(this.options.task, this.id);
       // Trigger resize events on the task:
@@ -40,6 +37,8 @@ H5P.SpellTheWord = (function ($) {
         this.task.trigger('resize', event);
       });
     }
+
+    console.log(this);
   };
 
   /**
@@ -49,16 +48,7 @@ H5P.SpellTheWord = (function ($) {
    * @param {jQuery} $container
    */
   C.prototype.attach = function ($container) {
-    if (this.task) {
-      // Create a container for the task
-      var $taskHolder = $('<div>');
-
-      // Attach the task to the container
-      this.task.attach($taskHolder);
-
-      // Append the task container to our content types container
-      $container.append($taskHolder);
-    }
+    console.log($.fn.jquery);
     // Set class on container to identify it as a greeting card
     // container.  Allows for styling later.
     $container.addClass("freeh5p-spelltheword");

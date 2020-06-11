@@ -1,0 +1,36 @@
+{
+  "name": "freelearning-h5p",
+  "version": "1.0.0",
+  "description": "Repo for H5P content types developed for Freelearning.io",
+  "main": "index.js",
+  "scripts": {
+    "build-js": "webpack --mode=production",
+    "watch-js": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Keyteq/freelearning-h5p.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Keyteq/freelearning-h5p/issues"
+  },
+  "homepage": "https://github.com/Keyteq/freelearning-h5p#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/jquery": "^3.3.38",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.2.0",
+    "prettier": "^2.0.5",
+    "ts-loader": "^7.0.4",
+    "typescript": "^3.9.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}

@@ -10,14 +10,10 @@
   }],
   "preloadedDependencies": [
     {
-      "machineName": "jQuery.ui",
-      "majorVersion": 1,
-      "minorVersion": 10
+      "machineName": "jQuery.ui", "majorVersion": 1, "minorVersion": 10
     },
     {
-      "machineName": "H5P.SpellTheWord",
-      "majorVersion": 1,
-      "minorVersion": 0
+      "machineName": "H5P.SpellTheWord", "majorVersion": 1, "minorVersion": 0
     }
   ],
   "mainLibrary": "H5P.SpellTheWord",
