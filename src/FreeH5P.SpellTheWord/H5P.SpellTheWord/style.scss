@@ -6,11 +6,11 @@
   }
 
   &-image {
-    max-height: 200px;
-    width: auto;
+    max-height: auto;
+    max-width: 500px;
     position: relative;
   }
-  
+
   &-letters {
     &__dropzone, &__dragzone {
       display: flex;
