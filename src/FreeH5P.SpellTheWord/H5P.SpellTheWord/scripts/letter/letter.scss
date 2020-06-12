@@ -1,0 +1,26 @@
+.flh5p-letter {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  margin-right: 8px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 8px rgba(24, 27, 94, 0.07);
+  border: 1px solid #e7e7e7;
+  font-size: 18px;
+  line-height: 48px;
+  font-weight: 600;
+
+  &--drag {
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: #1F2B52;
+    color: #fff;
+    text-align: center;
+
+    &:active {
+      cursor: move;
+    }
+  }
+}

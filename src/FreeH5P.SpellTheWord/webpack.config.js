@@ -4,7 +4,6 @@ module.exports = {
   mode: 'development',
   context: path.resolve(__dirname, 'H5P.SpellTheWord'),
   entry: './app.ts',
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {

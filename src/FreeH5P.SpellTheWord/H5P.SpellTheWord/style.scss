@@ -1,5 +1,26 @@
 @import 'scss/variables';
 
-.flh5p-app {
-  padding: $spacing-2;
+.flh5p {
+  &-app {
+    padding: $spacing-2;
+  }
+
+  &-image {
+    max-height: 200px;
+    width: auto;
+    position: relative;
+  }
+  
+  &-letters {
+    &__dropzone, &__dragzone {
+      display: flex;
+      flex-wrap: nowrap;
+      width: auto;
+      margin: 8px auto;
+    }
+
+    &__dragzone {
+      margin-top: 32px;
+    }
+  }
 }
