@@ -18,10 +18,12 @@ class Letter {
   ) {
     this.letter = letter;
     if (options && options.droppable) {
-      letter !== ' ' ? this.classes.push('flh5p-letter--drop') : this.classes.push('flh5p-letter--blank');
+      letter && letter !== ' ' ? this.classes.push('flh5p-letter--drop') : this.classes.push('flh5p-letter--blank');
       //
     } else if (options && options.draggable) {
       this.classes.push('flh5p-letter--drag');
+    } else if (!letter) {
+      this.classes.push('flh5p-letter--blank')
     }
     this.element = $('<div>', { class: this.classes.join(' ') });
     if (options && options.draggable) {
@@ -31,7 +33,7 @@ class Letter {
       });
     }
 
-    if (options && options.droppable) {
+    if (options && options.droppable && letter !== ' ') {
       this.element.droppable({
         accept: '.flh5p-letter--drag',
         drop: ( event: any, ui: any ) => {

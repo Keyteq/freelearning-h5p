@@ -1,26 +1,38 @@
 @import 'scss/variables';
+@import 'scss/fonts';
+@import 'scss/word';
 
 .flh5p {
   &-app {
     padding: $spacing-2;
-  }
-
-  &-image {
-    max-height: auto;
-    max-width: 500px;
-    position: relative;
+    font-family: $font-family;
+    color: $text-default;
   }
 
   &-letters {
     &__dropzone, &__dragzone {
-      display: flex;
+      display: inline-flex;
       flex-wrap: nowrap;
       width: auto;
       margin: 8px auto;
+      flex: 1 0 100%;
+      justify-content: center;
     }
 
     &__dragzone {
       margin-top: 32px;
     }
+  }
+
+  &-words {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: $spacing-3 0;
+  }
+
+  &-footer {
+    padding: $spacing-3 0;
+    border-top: 1px solid $border-color;
   }
 }

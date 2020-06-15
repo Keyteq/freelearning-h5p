@@ -1,7 +1,5 @@
-// import * as $ from 'jquery';
 import Letter from './letter/letter';
 import { shuffleArray } from './helpers';
-// import { } from './blocks';
 declare var H5P: any;
 // declare var H5PIntegration: any;
 const $ = H5P.jQuery;
@@ -16,7 +14,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   isCompleted = false;
 
   scoreBar: any;
-  $lettersWrapper: any;
+  $wordsWrapper: any;
   // @constructor extends (H5P.EventDispatcher as { new(): any; })
   constructor(config: any, contentId: string, contentData: any = {}) {
     super();
@@ -33,25 +31,29 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     // Create basic markup
     $wrapper.addClass('flh5p-app');
     // Letters wrapper
-    this.$lettersWrapper = $('<div>', {
-      'class': 'flh5p-app__letter-list'
+    console.log(this.config.words);
+    this.$wordsWrapper = $('<div>', {
+      'class': 'flh5p-words'
     });
-    // Get letters from type config
-    const letters = this.config.word.split('');
-    this.correctSpelling = [...letters];
-    if (this.config.image && this.config.image.path) {
-      $wrapper.append('<img class="flh5p-image" src="' + H5P.getPath(this.config.image.path, this.id) + '">');
-    }
-    // Add greeting text.
-    $wrapper.append('<div class="greeting-text">' + this.config.greeting + '</div>');
-    // for (let i = 0; i < letters.length; i = i + 1) {
-      // this.letters.push(new Letter(letters[i]));
-    // }
-    this.randomised = shuffleArray(letters);
-    this.generateBlocks(this.$lettersWrapper, letters, this.randomised);
+    this.$headerElement = $('<div>', { 'class': 'flh5p-header' });
+    this.$bottomBar = $('<div>', { 'class': 'flh5p-footer' });
+    this.setupWords(this.config.words);
+    this.createBottomBar();
+    // Add the header for the game
+    $wrapper.append(this.$headerElement);
+    // Add wrapper for words
+    $wrapper.append(this.$wordsWrapper);
+    // Add bottom bar
+    $wrapper.append(this.$bottomBar);
+  }
 
-    $wrapper.append(this.$lettersWrapper);
+  createBottomBar = () => {
+    console.log('Yo');
     const self = this;
+    const $scorebar = $('<div>', {
+      'class': 'flh5p-scorebar'
+    });
+
     const $scorebtn = H5P.JoubelUI.createButton({
       title: 'Get score',
       click: function () {
@@ -69,28 +71,55 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     });
     $resetbtn.html('Reset');
 
-    $wrapper.append($scorebtn);
-    $wrapper.append($resetbtn);
-
-    var $scorebar = $('<div>', {
-      'class': ''
-    });
-
-    this.scoreBar = H5P.JoubelUI.createScoreBar(self.correctSpelling.length, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
-
+    this.scoreBar = H5P.JoubelUI.createScoreBar(this.config.words.length, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
     this.scoreBar.appendTo($scorebar);
-    $wrapper.append($scorebar);
+    this.$bottomBar.append($scorebar);
+
+    this.$bottomBar.append($scorebtn);
+    this.$bottomBar.append($resetbtn);
   }
 
+  // Generate basic markup for main containers
+  setupWords = (words: []) => {
+    // Container for all the words
+    const $wrapper = this.$wordsWrapper;
+    words.map((word: any) => {
+      this.generateWord($wrapper, word);
+    });
+  }
 
-  generateBlocks = ($wrapper: JQuery, word: string[], randomised: any[]) => {
+  // Generate markup for one word in our game
+  generateWord = ($wrapper: JQuery, word: {
+    word: string,
+    image?: { path: string, height: number, width: number, mime: string },
+    text?: string
+  }) => {
+    const $wordcontainer = $('<div>', {
+      'class': 'flh5p-word'
+    });
+
     const $dropcontainer = $('<div>', {
       'class': 'flh5p-letters__dropzone'
     });
 
-    word.map((letter: string) => {
+    // Add image if available
+    if (word.image && word.image.path) {
+      const $imagewrapper = $('<div>', { 'class': 'flh5p-word__image' });
+      $imagewrapper.append($('<img>', { 'class': '', 'src': H5P.getPath(word.image.path, this.id) }));
+      $wordcontainer.append($imagewrapper);
+    }
+    // Add text clue if available
+    if (word.text) {
+      $wordcontainer.append('<p class="flh5p-word__textclue">' + word.text + '</p>');
+    }
+
+    // Split word into individual letters
+    word.word.split('').map((letter: string) => {
       new Letter(letter, $dropcontainer, { droppable: true });
     });
+
+    // Randomise order
+    const randomised = shuffleArray([...word.word.split('')]);
 
     const $draggablecontainer = $('<div>', {
       'class': 'flh5p-letters__dragzone'
@@ -102,8 +131,9 @@ export default class SpellTheWord extends H5P.EventDispatcher {
       }
     })
 
-    $wrapper.append($dropcontainer);
-    $wrapper.append($draggablecontainer);
+    $wordcontainer.append($dropcontainer);
+    $wordcontainer.append($draggablecontainer);
+    $wrapper.append($wordcontainer);
   }
 
   resetAll = () => {
