@@ -1,8 +1,10 @@
+import Word from './word/word';
 import Letter from './letter/letter';
-import { shuffleArray } from './helpers';
 declare var H5P: any;
 // declare var H5PIntegration: any;
 const $ = H5P.jQuery;
+
+export const H5PData = { id: '' };
 
 export default class SpellTheWord extends H5P.EventDispatcher {
   letters: Letter[] = [];
@@ -10,11 +12,16 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   correctSpelling: string[] = [];
   id: string;
   config: any;
+  renderedWords: Word[] = [];
+  activeWordIndex: number;
   // For H5P integration
   isCompleted = false;
 
   scoreBar: any;
-  $wordsWrapper: any;
+  $wrapper: JQuery;
+  $wordsWrapper: JQuery;
+  $prevButton: JQuery;
+  $nextButton: JQuery;
   // @constructor extends (H5P.EventDispatcher as { new(): any; })
   constructor(config: any, contentId: string, contentData: any = {}) {
     super();
@@ -24,14 +31,14 @@ export default class SpellTheWord extends H5P.EventDispatcher {
       image: null
     }, config);
     this.id = contentId;
-    console.log(this.config);
+    H5PData.id = contentId;
   }
 
   attach = ($wrapper: JQuery) => {
+    this.$wrapper = $wrapper;
     // Create basic markup
     $wrapper.addClass('flh5p-app');
     // Letters wrapper
-    console.log(this.config.words);
     this.$wordsWrapper = $('<div>', {
       'class': 'flh5p-words'
     });
@@ -39,6 +46,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     this.$bottomBar = $('<div>', { 'class': 'flh5p-footer' });
     this.setupWords(this.config.words);
     this.createBottomBar();
+    this.createNavigation();
     // Add the header for the game
     $wrapper.append(this.$headerElement);
     // Add wrapper for words
@@ -48,7 +56,6 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   }
 
   createBottomBar = () => {
-    console.log('Yo');
     const self = this;
     const $scorebar = $('<div>', {
       'class': 'flh5p-scorebar'
@@ -56,22 +63,23 @@ export default class SpellTheWord extends H5P.EventDispatcher {
 
     const $scorebtn = H5P.JoubelUI.createButton({
       title: 'Get score',
+      html: 'Score',
       click: function () {
-        self.getScore();
-        self.isCompleted = true;
+        self.calculateScore();
       }
     });
-    $scorebtn.html('Score');
 
     const $resetbtn = H5P.JoubelUI.createButton({
       title: 'Reset game',
+      html: 'Reset',
       click: function() {
         self.resetTask();
       }
     });
-    $resetbtn.html('Reset');
 
-    this.scoreBar = H5P.JoubelUI.createScoreBar(this.config.words.length, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
+    const words = [...this.config.words];
+    const maxScore = words.map((data: any) => data.word.split('').filter((letter: string) => letter !== ' ').length);
+    this.scoreBar = H5P.JoubelUI.createScoreBar(maxScore.reduce((a: number, b: number) => a + b, 0), 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
     this.scoreBar.appendTo($scorebar);
     this.$bottomBar.append($scorebar);
 
@@ -79,69 +87,105 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     this.$bottomBar.append($resetbtn);
   }
 
+  createNavigation = () => {
+    const self = this;
+    const $wrapper = this.$wrapper;
+    /* const $prevButton = $('<button>', {
+      html: 'Previous word',
+      title: 'Previous word',
+      class: 'flh5p-nav-button flh5p-nav-button--prev',
+      click: () => {
+        console.log('Previous');
+        const index = self.activeWordIndex;
+        const words = self.renderedWords;
+        if (index - 1 > -1) {
+          words[index].hide();
+          words[index - 1].show();
+          self.activeWordIndex = index - 1;
+        }
+      }
+    }); */
+    const $prevButton = H5P.JoubelUI.createButton({
+      html: 'Previous word',
+      title: 'Previous word',
+      click: () => {
+        const index = self.activeWordIndex;
+        const words = self.renderedWords;
+        if (index - 1 > -1) {
+          words[index].hide();
+          words[index - 1].show();
+          self.activeWordIndex = index - 1;
+        }
+      }
+    });
+
+    const $nextButton = H5P.JoubelUI.createButton({
+      html: 'Next word',
+      title: 'Next word',
+      click: () => {
+        const index = self.activeWordIndex;
+        const words = self.renderedWords;
+        if (words[index + 1]) {
+          words[index].hide();
+          words[index + 1].show();
+          self.activeWordIndex = index + 1;
+          // Update some state on the buttons
+          if (!words[index + 2]) {
+            console.log('Disable ', this);
+          }
+        }
+      }
+    });
+    /* const $nextButton = $('<button>', {
+      html: 'Next word',
+      title: 'Next word',
+      class: 'flh5p-nav-button flh5p-nav-button--next',
+      click: () => {
+        console.log('Next');
+        const index = self.activeWordIndex;
+        const words = self.renderedWords;
+        if (words[index + 1]) {
+          words[index].hide();
+          words[index + 1].show();
+          self.activeWordIndex = index + 1;
+          // Update some state on the buttons
+          if (!words[index + 2]) {
+            console.log('Disable ', this);
+          }
+        }
+      }
+    }); */
+
+    $wrapper.append($prevButton);
+    $wrapper.append($nextButton);
+  }
+
   // Generate basic markup for main containers
   setupWords = (words: []) => {
     // Container for all the words
     const $wrapper = this.$wordsWrapper;
     words.map((word: any) => {
-      this.generateWord($wrapper, word);
+      this.renderedWords.push(new Word(word, $wrapper));
     });
-  }
-
-  // Generate markup for one word in our game
-  generateWord = ($wrapper: JQuery, word: {
-    word: string,
-    image?: { path: string, height: number, width: number, mime: string },
-    text?: string
-  }) => {
-    const $wordcontainer = $('<div>', {
-      'class': 'flh5p-word'
-    });
-
-    const $dropcontainer = $('<div>', {
-      'class': 'flh5p-letters__dropzone'
-    });
-
-    // Add image if available
-    if (word.image && word.image.path) {
-      const $imagewrapper = $('<div>', { 'class': 'flh5p-word__image' });
-      $imagewrapper.append($('<img>', { 'class': '', 'src': H5P.getPath(word.image.path, this.id) }));
-      $wordcontainer.append($imagewrapper);
-    }
-    // Add text clue if available
-    if (word.text) {
-      $wordcontainer.append('<p class="flh5p-word__textclue">' + word.text + '</p>');
-    }
-
-    // Split word into individual letters
-    word.word.split('').map((letter: string) => {
-      new Letter(letter, $dropcontainer, { droppable: true });
-    });
-
-    // Randomise order
-    const randomised = shuffleArray([...word.word.split('')]);
-
-    const $draggablecontainer = $('<div>', {
-      'class': 'flh5p-letters__dragzone'
-    });
-
-    randomised.map((letter: string) => {
-      if (letter !== ' ') {
-        new Letter(letter, $draggablecontainer, { draggable: true });
-      }
-    })
-
-    $wordcontainer.append($dropcontainer);
-    $wordcontainer.append($draggablecontainer);
-    $wrapper.append($wordcontainer);
+    // Show first word
+    this.renderedWords[0].show();
+    this.activeWordIndex = 0;
   }
 
   resetAll = () => {
+    // Reset all rendered words
+    this.renderedWords.map((word: Word) => word.reset());
     this.scoreBar.setScore(0);
-    this.$lettersWrapper.html('');
-    console.log(this.$lettersWrapper);
-    const letters = this.config.word.split('');
-    this.generateBlocks(this.$lettersWrapper, letters, shuffleArray(letters));
+    this.activeWordIndex = 0;
+  }
+
+  // Method for calculating score of current game instance
+  calculateScore = () => {
+    // Calculate score for all words
+    const scores = this.renderedWords.map((word: Word) => word.calculateScore());
+    const totalScore = scores.reduce((a, b) => a + b, 0);
+    this.points = totalScore;
+    this.scoreBar.setScore(totalScore);
   }
 
   // Methods to meet contract for implenting with H5P
@@ -150,22 +194,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   }
 
   getScore = () => {
-    const dropped = $('.flh5p-letter--drop');
-    // console.log(dropped);
-    let totalScore = 0;
-    let maxScore = this.correctSpelling.length;
-    $.each(dropped, (i: any, val: any) => {
-      const indexLetter = $(val).text();
-      if (indexLetter) {
-        // console.log(indexLetter);
-        // console.log(this.correctSpelling[i]);
-        if (indexLetter === this.correctSpelling[i]) {
-          totalScore = totalScore + 1;
-        }
-      }
-    })
-    this.scoreBar.setScore(totalScore);
-    return totalScore;
+    return this.points;
   }
 
   getMaxScore = () => {
