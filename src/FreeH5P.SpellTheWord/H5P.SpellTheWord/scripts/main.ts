@@ -90,24 +90,14 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   createNavigation = () => {
     const self = this;
     const $wrapper = this.$wrapper;
-    /* const $prevButton = $('<button>', {
-      html: 'Previous word',
-      title: 'Previous word',
-      class: 'flh5p-nav-button flh5p-nav-button--prev',
-      click: () => {
-        console.log('Previous');
-        const index = self.activeWordIndex;
-        const words = self.renderedWords;
-        if (index - 1 > -1) {
-          words[index].hide();
-          words[index - 1].show();
-          self.activeWordIndex = index - 1;
-        }
-      }
-    }); */
+    const $navWrapper = $('<div>', {
+      class: 'flh5p-navigation',
+    });
+
     const $prevButton = H5P.JoubelUI.createButton({
       html: 'Previous word',
       title: 'Previous word',
+      class: 'flh5p-nav-button flh5p-nav-button--prev',
       click: () => {
         const index = self.activeWordIndex;
         const words = self.renderedWords;
@@ -122,6 +112,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     const $nextButton = H5P.JoubelUI.createButton({
       html: 'Next word',
       title: 'Next word',
+      class: 'flh5p-nav-button flh5p-nav-button--next',
       click: () => {
         const index = self.activeWordIndex;
         const words = self.renderedWords;
@@ -136,28 +127,14 @@ export default class SpellTheWord extends H5P.EventDispatcher {
         }
       }
     });
-    /* const $nextButton = $('<button>', {
-      html: 'Next word',
-      title: 'Next word',
-      class: 'flh5p-nav-button flh5p-nav-button--next',
-      click: () => {
-        console.log('Next');
-        const index = self.activeWordIndex;
-        const words = self.renderedWords;
-        if (words[index + 1]) {
-          words[index].hide();
-          words[index + 1].show();
-          self.activeWordIndex = index + 1;
-          // Update some state on the buttons
-          if (!words[index + 2]) {
-            console.log('Disable ', this);
-          }
-        }
-      }
-    }); */
 
-    $wrapper.append($prevButton);
-    $wrapper.append($nextButton);
+    this.$prevButton = $prevButton;
+    this.$nextButton = $nextButton;
+
+    $navWrapper.append($prevButton);
+    $navWrapper.append($nextButton);
+    $wrapper.append($navWrapper);
+    console.log($nextButton);
   }
 
   // Generate basic markup for main containers

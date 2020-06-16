@@ -9,6 +9,7 @@ const $ = H5P.jQuery;
 export default class Word {
   $wrapper: JQuery;
   $wordcontainer: JQuery;
+  $scoreBar: any;
   _element: any;
   classes = ['flh5p-word'];
   _visibleClass = 'flh5p-word--visible';
@@ -78,8 +79,18 @@ export default class Word {
       }
     })
 
+    // Create scorebar
+    const $scorebar = $('<div>', {
+      'class': 'flh5p-scorebar'
+    });
+
+    const maxPoints = this.config.word.split('').filter((letter) => letter !== ' ').length;
+    this.$scoreBar = H5P.JoubelUI.createScoreBar(maxPoints, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
+
+    this.$scoreBar.appendTo($scorebar);
     $wordcontainer.append($dropcontainer);
     $wordcontainer.append($draggablecontainer);
+    $wordcontainer.append($scorebar);
     this.$wrapper.append($wordcontainer);
   }
 
@@ -92,6 +103,7 @@ export default class Word {
       }
     });
     this.points = score;
+    this.$scoreBar.setScore(score);
     return score;
   }
 
