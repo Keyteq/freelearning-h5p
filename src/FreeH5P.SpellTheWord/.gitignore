@@ -1,0 +1,7 @@
+# Ignore dependencies
+FontAwesome/
+H5P.FontIcons/
+H5P.JoubelUI/
+H5P.Transition/
+jQuery.ui/
+Tether/

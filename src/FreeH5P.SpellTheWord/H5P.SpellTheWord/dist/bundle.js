@@ -86,8 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-<<<<<<< HEAD
-=======
 /***/ "../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./scripts/letter/letter.scss":
 /*!*************************************************************************************************************************************************************!*\
   !*** C:/dev/freelearning-h5p/node_modules/css-loader/dist/cjs.js!C:/dev/freelearning-h5p/node_modules/sass-loader/dist/cjs.js!./scripts/letter/letter.scss ***!
@@ -145,17 +143,11 @@ eval("\n\nvar isOldIE = function isOldIE() {\n  var memo;\n  return function mem
 
 /***/ }),
 
->>>>>>> f7a25501aa700b4c53046cd9ad50b18824268493
 /***/ "./app.ts":
 /*!****************!*\
   !*** ./app.ts ***!
   \****************/
 /*! no exports provided */
-<<<<<<< HEAD
-/***/ (function(module, exports) {
-
-eval("throw new Error(\"Module build failed (from C:/dev/freelearning-h5p/node_modules/babel-loader/lib/index.js):\\nError: ENOENT: no such file or directory, open 'C:\\\\dev\\\\freelearning-h5p\\\\src\\\\FreeH5P.SpellTheWord\\\\H5P.SpellTheWord\\\\app.ts'\");\n\n//# sourceURL=webpack:///./app.ts?");
-=======
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -241,7 +233,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var api = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ \"../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js\");\n            var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./style.scss */ \"../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./style.scss\");\n\n            content = content.__esModule ? content.default : content;\n\n            if (typeof content === 'string') {\n              content = [[module.i, content, '']];\n            }\n\nvar options = {};\n\noptions.insert = \"head\";\noptions.singleton = false;\n\nvar update = api(content, options);\n\n\n\nmodule.exports = content.locals || {};\n\n//# sourceURL=webpack:///./style.scss?");
->>>>>>> f7a25501aa700b4c53046cd9ad50b18824268493
 
 /***/ })
 
