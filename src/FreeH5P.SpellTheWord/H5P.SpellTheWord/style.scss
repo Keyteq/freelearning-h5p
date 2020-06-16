@@ -1,0 +1,50 @@
+@import 'scss/variables';
+@import 'scss/fonts';
+
+.flh5p {
+  &-app {
+    padding: $spacing-2;
+    font-family: $font-family;
+    color: $text-default;
+  }
+
+  &-letters {
+    &__dropzone, &__dragzone {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      width: auto;
+      margin: 8px auto;
+      flex: 1 0 100%;
+      justify-content: center;
+    }
+
+    &__dragzone {
+      margin-top: 32px;
+    }
+  }
+
+  &-words {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: $spacing-3 0;
+    position: relative;
+    min-height: 520px;
+  }
+
+  &-footer {
+    padding: $spacing-3 0;
+    border-top: 1px solid $border-color;
+  }
+
+  &__nav-button {
+
+    &--prev {
+
+    }
+
+    &--next {
+
+    }
+  }
+}

@@ -3,19 +3,39 @@
     "label": "Greeting text",
     "name": "greeting",
     "type": "text",
-    "description": "The greeting text displayed before the word"
+    "description": "The greeting text displayed before the words"
   },
   {
-    "label": "Image clue",
-    "name": "image",
-    "type": "image",
-    "optional": true,
-    "description": "An image shown before the letters to help the user."
-  },
-  {
-    "label": "Word",
-    "name": "word",
-    "type": "text",
-    "description": "The word that the user will be asked to spell"
+    "label": "Word challenges",
+    "name": "words",
+    "type": "list",
+    "description": "All the words that you want to include in your game.",
+    "min": 1,
+    "entity": "word",
+    "field": {
+      "name": "word",
+      "type": "group",
+      "label": "Word",
+      "fields": [
+        {
+          "name": "text",
+          "type": "text",
+          "label": "Text clue",
+          "description": "Clue to be shown with the word."
+        },
+        {
+          "name": "image",
+          "type": "image",
+          "label": "Image clue",
+          "description": "Image to be shown together with the word."
+        },
+        {
+          "name": "word",
+          "type": "text",
+          "label": "The word",
+          "description": "The word that is to be spellt."
+        }
+      ]
+    }
   }
 ]
