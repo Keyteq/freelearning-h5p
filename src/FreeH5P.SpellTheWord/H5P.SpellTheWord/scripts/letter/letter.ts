@@ -32,6 +32,9 @@ class Letter {
       this._element.draggable({
         revert: 'invalid'
       });
+      this._element.dblclick(() => {
+        console.log('double click');
+      });
     }
 
     if (options && options.droppable && letter !== ' ') {
@@ -55,6 +58,24 @@ class Letter {
 
   getText() {
     return this.droppedTextValue;
+  }
+
+  isCorrect() {
+    if (this._element.hasClass('h5p-wrong')) {
+      this._element.removeClass('h5p-wrong');
+    }
+    this._element.addClass('h5p-correct');
+  }
+
+  isWrong() {
+    if (this._element.hasClass('h5p-correct')) {
+      this._element.removeClass('h5p-correct');
+    }
+    this._element.addClass('h5p-wrong');
+  }
+
+  reset() {
+    this._element.removeClass(['h5p-wrong', 'h5p-correct']);
   }
 }
 

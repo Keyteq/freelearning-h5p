@@ -150,8 +150,11 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   }
 
   resetAll = () => {
+    console.log(this.renderedWords);
     // Reset all rendered words
     this.renderedWords.map((word: Word) => word.reset());
+    this.renderedWords[this.activeWordIndex].hide();
+    this.renderedWords[0].show();
     this.scoreBar.setScore(0);
     this.activeWordIndex = 0;
   }
@@ -183,7 +186,6 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   }
 
   resetTask = () => {
-    console.log('Reset los el taskos');
     this.resetAll();
   }
 

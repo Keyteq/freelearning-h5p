@@ -16,7 +16,6 @@
   z-index: 2;
   transition: all ease 0.5s;
   opacity: 0;
-  padding-bottom: $spacing-3;
   pointer-events: none;
   visibility: hidden;
 
@@ -24,6 +23,7 @@
     opacity: 1;
     pointer-events: all;
     visibility: visible;
+    position: relative;
   }
 
   &__image {

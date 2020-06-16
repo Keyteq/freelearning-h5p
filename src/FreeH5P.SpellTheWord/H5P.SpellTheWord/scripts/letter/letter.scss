@@ -21,7 +21,7 @@
     color: $text-default;
     text-align: center;
 
-    &:active {
+    &:active, &:hover {
       cursor: move;
     }
   }
@@ -30,5 +30,56 @@
     background-color: transparent;
     border-color: transparent;
     box-shadow: none;
+  }
+
+  // States for correct/incorrect
+  &.h5p-correct {
+    border: none;
+    box-shadow: none;
+    background-color: #b6e4ce;
+    border-color: #b6e4ce;
+    color: #255c41;
+    &:after {
+      content: "\f00c";
+      background: #b6e4ce;
+      color: #255c41;
+    }
+    > .flh5p-letter {
+      background-color: #b6e4ce;
+      border-color: #b6e4ce;
+      color: #255c41;
+      box-shadow: 0 0.1em 0 #a2bdb0;
+    }
+  }
+
+  &.h5p-wrong {
+    color: #b71c1c;
+    background: #fbd7d8;
+    border-color: #fbd7d8;
+    box-shadow: 0 0.1em 0 #deb8b8;
+    &:after {
+      content: "\f00d";
+    }
+    > .flh5p-letter {
+      color: #b71c1c;
+      background: #fbd7d8;
+      border-color: #fbd7d8;
+      box-shadow: 0 0.1em 0 #deb8b8;
+    }
+  }
+  &.h5p-wrong, &.h5p-correct {
+    position: relative;
+    &:after {
+      font-family: 'H5PFontAwesome4';
+      font-size: .75em;
+      font-weight: 400;
+      position: absolute;
+      right: .1em;
+      bottom: 0;
+      background: inherit;
+      border-radius: .25em;
+      line-height: 1;
+      padding: .15em 0 0 .2em;
+    }
   }
 }

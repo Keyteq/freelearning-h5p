@@ -100,6 +100,11 @@ export default class Word {
     this.correctSpelling.map((letter: string, index: number) => {
       if (letter === providedSpelling[index] && letter !== ' ') {
         score = score + 1;
+        this.dropZones[index].isCorrect();
+      } else {
+        if (letter !== ' ') {
+          this.dropZones[index].isWrong();
+        }
       }
     });
     this.points = score;
@@ -108,8 +113,14 @@ export default class Word {
   }
 
   reset() {
+    console.log('Reset word: ');
+    console.log(this.$wrapper);
+    this.$wordcontainer.remove();
+    this.dropZones = [];
     this.isComplete = false;
     this.points = 0;
+    this.$scoreBar.setScore(0);
+    this.render();
   }
 
   show() {

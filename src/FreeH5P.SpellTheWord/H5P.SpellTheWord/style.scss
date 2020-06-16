@@ -29,7 +29,7 @@
     flex-wrap: nowrap;
     padding: $spacing-3 0;
     position: relative;
-    min-height: 550px;
+    min-height: 580px;
   }
 
   &-footer {
@@ -56,5 +56,9 @@
       right: $spacing;
       float: right;
     }
+  }
+
+  &-scorebar {
+    padding: $spacing-3 0;
   }
 }
