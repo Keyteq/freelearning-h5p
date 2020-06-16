@@ -1,0 +1,49 @@
+@import '../../scss/variables';
+@import '../../scss/fonts';
+
+.flh5p-word {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+  flex: 1 0 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  transition: all ease 0.5s;
+  opacity: 0;
+
+  &--visible {
+    opacity: 1;
+  }
+  
+  &__image {
+    flex: 1 0 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    img {
+      max-width: 100%;
+      height: auto;
+      max-height: 320px;
+      display: block;
+      position: relative;
+      margin: 0 auto $spacing-2;
+      border-radius: 10px;
+    }
+  }
+
+  &__textclue {
+    flex: 1 0 100%;
+    font-size: $font-size-larger;
+    text-align: center;
+    margin-bottom: $spacing-2;
+    font-family: $font-family;
+    font-weight: 400;
+    font-size: $font-size-medium;
+    line-height: 164.5%;
+  }
+}
