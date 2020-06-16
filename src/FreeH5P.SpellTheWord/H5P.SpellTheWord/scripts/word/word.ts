@@ -84,7 +84,7 @@ export default class Word {
       'class': 'flh5p-scorebar'
     });
 
-    const maxPoints = this.config.word.split('').filter((letter) => letter !== ' ').length;
+    const maxPoints = this.config && this.config.word ? this.config.word.split('').filter((letter) => letter !== ' ').length : 0;
     this.$scoreBar = H5P.JoubelUI.createScoreBar(maxPoints, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
 
     this.$scoreBar.appendTo($scorebar);

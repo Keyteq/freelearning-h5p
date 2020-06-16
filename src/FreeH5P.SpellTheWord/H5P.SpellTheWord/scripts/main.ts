@@ -22,6 +22,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   $wordsWrapper: JQuery;
   $prevButton: JQuery;
   $nextButton: JQuery;
+  $processbar: any;
   // @constructor extends (H5P.EventDispatcher as { new(): any; })
   constructor(config: any, contentId: string, contentData: any = {}) {
     super();
@@ -105,6 +106,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
           words[index].hide();
           words[index - 1].show();
           self.activeWordIndex = index - 1;
+          self.$processbar.setProgress(index);
         }
       }
     });
@@ -120,6 +122,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
           words[index].hide();
           words[index + 1].show();
           self.activeWordIndex = index + 1;
+          self.$processbar.next();
           // Update some state on the buttons
           if (!words[index + 2]) {
             console.log('Disable ', this);
@@ -128,13 +131,18 @@ export default class SpellTheWord extends H5P.EventDispatcher {
       }
     });
 
+    const $processbar = H5P.JoubelUI.createProgressbar(this.config.words.length, {});
+
     this.$prevButton = $prevButton;
     this.$nextButton = $nextButton;
+    this.$processbar = $processbar;
+
+    this.$processbar.setProgress(1);
 
     $navWrapper.append($prevButton);
+    $processbar.appendTo($navWrapper);
     $navWrapper.append($nextButton);
     $wrapper.append($navWrapper);
-    console.log($nextButton);
   }
 
   // Generate basic markup for main containers
@@ -157,6 +165,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     this.renderedWords[0].show();
     this.scoreBar.setScore(0);
     this.activeWordIndex = 0;
+    this.$processbar.setProgress(1);
   }
 
   // Method for calculating score of current game instance
