@@ -9,6 +9,7 @@ const $ = H5P.jQuery;
 export default class Word {
   $wrapper: JQuery;
   $wordcontainer: JQuery;
+  $scorebarWrapper: JQuery;
   $scoreBar: any;
   _element: any;
   classes = ['flh5p-word'];
@@ -34,7 +35,9 @@ export default class Word {
   ) {
     this.config = config;
     this.$wrapper = $wrapper;
-    this.correctSpelling = [...this.config.word.split('')];
+    if (this.config && this.config.word) {
+      this.correctSpelling = [...this.config.word.split('')];
+    }
     this.render();
   }
 
@@ -80,17 +83,18 @@ export default class Word {
     })
 
     // Create scorebar
-    const $scorebar = $('<div>', {
-      'class': 'flh5p-scorebar'
+    const $scorebar_wrapper = $('<div>', {
+      'class': 'flh5p-scorebar flh5p-scorebar--hidden'
     });
 
     const maxPoints = this.config && this.config.word ? this.config.word.split('').filter((letter) => letter !== ' ').length : 0;
+    this.$scorebarWrapper = $scorebar_wrapper;
     this.$scoreBar = H5P.JoubelUI.createScoreBar(maxPoints, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
+    this.$scoreBar.appendTo($scorebar_wrapper);
 
-    this.$scoreBar.appendTo($scorebar);
     $wordcontainer.append($dropcontainer);
     $wordcontainer.append($draggablecontainer);
-    $wordcontainer.append($scorebar);
+    $wordcontainer.append($scorebar_wrapper);
     this.$wrapper.append($wordcontainer);
   }
 
@@ -109,18 +113,27 @@ export default class Word {
     });
     this.points = score;
     this.$scoreBar.setScore(score);
+    this.isComplete = true;
+    this.toggleScorebar();
     return score;
   }
 
   reset() {
-    console.log('Reset word: ');
-    console.log(this.$wrapper);
     this.$wordcontainer.remove();
     this.dropZones = [];
     this.isComplete = false;
     this.points = 0;
     this.$scoreBar.setScore(0);
+    this.toggleScorebar();
     this.render();
+  }
+
+  toggleScorebar() {
+    if (this.isComplete) {
+      this.$scorebarWrapper.removeClass('flh5p-scorebar--hidden');
+    } else {
+      this.$scorebarWrapper.addClass('flh5p-scorebar--hidden');
+    }
   }
 
   show() {

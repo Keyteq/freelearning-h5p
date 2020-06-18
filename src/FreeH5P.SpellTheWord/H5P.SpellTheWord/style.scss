@@ -61,5 +61,10 @@
 
   &-scorebar {
     padding: $spacing-3 0;
+    
+    &--hidden {
+      visibility: hidden;
+      display: none;
+    }
   }
 }

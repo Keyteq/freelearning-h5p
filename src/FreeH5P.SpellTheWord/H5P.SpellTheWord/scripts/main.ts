@@ -16,7 +16,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   activeWordIndex: number;
   // For H5P integration
   isCompleted = false;
-
+  $scorebarWrapper: JQuery;
   scoreBar: any;
   $wrapper: JQuery;
   $wordsWrapper: JQuery;
@@ -58,8 +58,8 @@ export default class SpellTheWord extends H5P.EventDispatcher {
 
   createBottomBar = () => {
     const self = this;
-    const $scorebar = $('<div>', {
-      'class': 'flh5p-scorebar'
+    const $scorebarwrapper = $('<div>', {
+      'class': 'flh5p-scorebar flh5p-scorebar--hidden'
     });
 
     const $scorebtn = H5P.JoubelUI.createButton({
@@ -81,8 +81,9 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     const words = [...this.config.words];
     const maxScore = words.map((data: any) => data.word.split('').filter((letter: string) => letter !== ' ').length);
     this.scoreBar = H5P.JoubelUI.createScoreBar(maxScore.reduce((a: number, b: number) => a + b, 0), 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
-    this.scoreBar.appendTo($scorebar);
-    this.$bottomBar.append($scorebar);
+    this.scoreBar.appendTo($scorebarwrapper);
+    this.$bottomBar.append($scorebarwrapper);
+    this.$scorebarWrapper = $scorebarwrapper;
 
     this.$bottomBar.append($scorebtn);
     this.$bottomBar.append($resetbtn);
@@ -158,14 +159,15 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   }
 
   resetAll = () => {
-    console.log(this.renderedWords);
     // Reset all rendered words
     this.renderedWords.map((word: Word) => word.reset());
     this.renderedWords[this.activeWordIndex].hide();
     this.renderedWords[0].show();
+    this.isCompleted = false;
     this.scoreBar.setScore(0);
     this.activeWordIndex = 0;
     this.$processbar.setProgress(1);
+    this.toggleScorebar();
   }
 
   // Method for calculating score of current game instance
@@ -175,6 +177,16 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     const totalScore = scores.reduce((a, b) => a + b, 0);
     this.points = totalScore;
     this.scoreBar.setScore(totalScore);
+    this.isCompleted = true;
+    this.toggleScorebar();
+  }
+
+  toggleScorebar = () => {
+    if (this.isCompleted) {
+      this.$scorebarWrapper.removeClass('flh5p-scorebar--hidden');
+    } else {
+      this.$scorebarWrapper.addClass('flh5p-scorebar--hidden');
+    }
   }
 
   // Methods to meet contract for implenting with H5P
@@ -201,19 +213,4 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   getXAPIData() {
     console.log('getXAPIData');
   }
-
-  /*
-  setTimeout(() => {
-    this.isCompleted = true;
-    console.log(H5P);
-    var $scorebar = $('<div>', {
-      'class': ''
-    });
-
-    let  scoreBar = H5P.JoubelUI.createScoreBar(4, 'scoreBarLabel', 'helpText', 'scoreExplanationButtonLabel');
-
-    scoreBar.appendTo($scorebar);
-    $wrapper.append($scorebar);
-  }, 2000);
-  */
 }

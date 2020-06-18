@@ -3,17 +3,18 @@
   "description": "A content type that allows you to spell out a word using drag and drop",
   "majorVersion": 1,
   "minorVersion": 0,
-  "patchVersion": 0,
+  "patchVersion": 3,
   "runnable": 1,
   "author": "Norad",
   "license": "cc-by-sa",
   "machineName": "H5P.SpellTheWord",
   "coreApi": {
     "majorVersion": 1,
-    "minorVersion": 0
+    "minorVersion": 0,
+    "patchVersion": 3
   },
   "preloadedJs": [
-    { "path": "dist/bundle.js" }
+    { "path": "dist/bundle.82bddb7fe41ebd0db736.js" }
   ],
   "preloadedCss": [
     {"path": "style.css"}
