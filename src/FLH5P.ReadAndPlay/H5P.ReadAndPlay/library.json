@@ -1,0 +1,38 @@
+{
+  "title": "Read and play",
+  "description": "A content type that allows you to spell out a word using drag and drop",
+  "majorVersion": 1,
+  "minorVersion": 0,
+  "patchVersion": 5,
+  "runnable": 1,
+  "author": "Norad",
+  "license": "cc-by-sa",
+  "machineName": "H5P.SpellTheWord",
+  "coreApi": {
+    "majorVersion": 1,
+    "minorVersion": 0
+  },
+  "preloadedJs": [
+    { "path": "dist/bundle.js" }
+  ],
+  "preloadedCss": [
+    {"path": "style.css"}
+  ],
+  "preloadedDependencies": [
+    {
+      "machineName": "FontAwesome",
+      "majorVersion": 4,
+      "minorVersion": 5
+    },
+    {
+      "machineName": "jQuery.ui",
+      "majorVersion": 1,
+      "minorVersion": 10
+    },
+    {
+      "machineName": "H5P.JoubelUI",
+      "majorVersion": 1,
+      "minorVersion": 3
+    }
+  ]
+}

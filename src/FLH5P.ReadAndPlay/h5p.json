@@ -1,0 +1,20 @@
+{
+  "title": "FreeLearning H5P Read and Play",
+  "language": "en",
+  "author": "Norad",
+  "license": "CC BY-SA",
+  "licenseVersion": "4.0",
+  "authors":[{
+    "name":"Robert Fohlin",
+    "role":"Developer"
+  }],
+  "preloadedDependencies": [
+    {
+      "machineName": "H5P.ReadAndPlay",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ],
+  "mainLibrary": "H5P.ReadAndPlay",
+  "embedTypes": ["div"]
+}
