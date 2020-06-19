@@ -76,7 +76,6 @@ export default class Word {
       const droppable = new Droppable(letter, $dropcontainer);
       droppable.on('dropped', (event: any) => {
         this.providedSpelling[index] = event.data.value;
-        console.log(this.providedSpelling);
       });
       this.dropZones.push(droppable);
       // this.dropZones.push(new Letter(letter, $dropcontainer, { droppable: true }));

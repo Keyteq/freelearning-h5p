@@ -2,7 +2,7 @@ import './droppable.scss';
 declare var H5P: any;
 const $ = H5P.jQuery;
 
-class FLH5PDroppable extends H5P.EventDispatcher {
+class FLH5PDroppable extends (H5P.EventDispatcher as { new(): any; }) {
   classes = ['flh5p-droppable'];
   letter: string;
   $container: JQuery;
@@ -40,7 +40,7 @@ class FLH5PDroppable extends H5P.EventDispatcher {
     $(target).append(ui.draggable[0]);
     self.textValue = ui.draggable[0].textContent;
     self.$droppedElement = ui.draggable[0];
-    self.trigger('dropped', { 'value': self.textValue });
+    // self.trigger('dropped', { 'value': self.textValue });
   }
 
   getText() {
