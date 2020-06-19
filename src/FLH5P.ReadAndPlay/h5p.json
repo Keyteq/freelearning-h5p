@@ -10,6 +10,11 @@
   }],
   "preloadedDependencies": [
     {
+      "machineName": "H5P.MultiChoice",
+      "majorVersion": 1,
+      "minorVersion": 14
+    },
+    {
       "machineName": "H5P.ReadAndPlay",
       "majorVersion": 1,
       "minorVersion": 0

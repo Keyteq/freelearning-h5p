@@ -1,0 +1,45 @@
+[
+  {
+    "label": "Set icon",
+    "name": "icon",
+    "type": "image",
+    "description": "The icon to be used by the set"
+  },
+  {
+    "label": "Steps",
+    "name": "steps",
+    "type": "list",
+    "description": "The steps available to complete in the game",
+    "min": 1,
+    "entity": "step",
+    "field": {
+      "name": "step",
+      "type": "group",
+      "label": "Step",
+      "fields": [
+        {
+          "label": "Title",
+          "name": "title",
+          "type": "text",
+          "description": "The title of the step."
+        },
+        {
+          "label": "Icon",
+          "name": "icon",
+          "type": "image",
+          "description": "An icon to be shown with the step"
+        },
+        {
+          "name": "content",
+          "type": "library",
+          "importance": "high",
+          "label": "The content",
+          "description": "The content to be displayed for the step",
+          "options": [
+            "H5P.MultiChoice 1.14"
+          ]
+        }
+      ]
+    }
+  }
+]
