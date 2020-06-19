@@ -1,7 +1,9 @@
 import './word.scss';
 import { H5PData } from '../main';
 import { shuffleArray } from '../helpers';
-import Letter from '../letter/letter';
+// import Letter from '../letter/letter';
+import Draggable from '../draggable/draggable';
+import Droppable from '../droppable/droppable';
 declare var H5P: any;
 const $ = H5P.jQuery;
 
@@ -23,7 +25,9 @@ export default class Word {
   maxPoints: number;
   isComplete = false;
   correctSpelling: string[];
-  dropZones: Letter[] = [];
+  dropZones: Droppable[] = [];
+  draggableLetters: Draggable[] = [];
+  providedSpelling: string[] = [];
 
   constructor(
     config: {
@@ -43,6 +47,7 @@ export default class Word {
 
   render() {
     const { word, image, text } = this.config;
+    const self = this;
     const $wordcontainer = $('<div>', {
       'class': this.classes.join(' ')
     });
@@ -65,8 +70,16 @@ export default class Word {
     }
 
     // Split word into individual letters
-    word.split('').map((letter: string) => {
-      this.dropZones.push(new Letter(letter, $dropcontainer, { droppable: true }));
+    word.split('').map((letter: string, index: number) => {
+      // Add an empty space in the providedSpelling array
+      this.providedSpelling.push('');
+      const droppable = new Droppable(letter, $dropcontainer);
+      droppable.on('dropped', (event: any) => {
+        this.providedSpelling[index] = event.data.value;
+        console.log(this.providedSpelling);
+      });
+      this.dropZones.push(droppable);
+      // this.dropZones.push(new Letter(letter, $dropcontainer, { droppable: true }));
     });
 
     // Randomise order
@@ -78,9 +91,13 @@ export default class Word {
 
     randomised.map((letter: string) => {
       if (letter !== ' ') {
-        new Letter(letter, $draggablecontainer, { draggable: true });
+        const draggable = new Draggable(letter, $draggablecontainer);
+        draggable.on('doubleclicked', (event: any) => {
+          self.addLetterViaDblClick(event.data);
+        });
+        this.draggableLetters.push(draggable);
       }
-    })
+    });
 
     // Create scorebar
     const $scorebar_wrapper = $('<div>', {
@@ -98,8 +115,24 @@ export default class Word {
     this.$wrapper.append($wordcontainer);
   }
 
+  addLetterViaDblClick(data: any) {
+    let firstFreeDropzone = null;
+    for (let i = 0; i < this.dropZones.length; i = i + 1) {
+      const zone = this.dropZones[i];
+      if (!zone.getText()) {
+        firstFreeDropzone = zone;
+        break;
+      }
+    }
+    if (firstFreeDropzone) {
+      firstFreeDropzone.$element.append(data.event.toElement);
+    }
+  }
+
   calculateScore() {
-    const providedSpelling = this.dropZones.map((drop: Letter) => drop.getText());
+    const providedSpelling = this.dropZones.map((drop: Droppable) => drop.getText());
+    // Disable all drag
+    this.draggableLetters.forEach((draggable: Draggable) => draggable.disable());
     let score = 0;
     this.correctSpelling.map((letter: string, index: number) => {
       if (letter === providedSpelling[index] && letter !== ' ') {
@@ -115,12 +148,15 @@ export default class Word {
     this.$scoreBar.setScore(score);
     this.isComplete = true;
     this.toggleScorebar();
+
     return score;
   }
 
   reset() {
     this.$wordcontainer.remove();
     this.dropZones = [];
+    this.draggableLetters = [];
+    this.providedSpelling = [];
     this.isComplete = false;
     this.points = 0;
     this.$scoreBar.setScore(0);

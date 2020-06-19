@@ -4,10 +4,10 @@ declare var H5P: any;
 const $ = H5P.jQuery;
 
 class Letter {
+  classes = ['flh5p-letter'];
   letter: string;
   randomPosition: number;
   _element: any;
-  classes = ['flh5p-letter'];
   droppedTextValue: string;
 
   constructor(
@@ -17,15 +17,6 @@ class Letter {
       droppable?: boolean, draggable?: boolean,
     }
   ) {
-    this.letter = letter;
-    if (options && options.droppable) {
-      letter && letter !== ' ' ? this.classes.push('flh5p-letter--drop') : this.classes.push('flh5p-letter--blank');
-      //
-    } else if (options && options.draggable) {
-      this.classes.push('flh5p-letter--drag');
-    } else if (!letter) {
-      this.classes.push('flh5p-letter--blank')
-    }
     this._element = $('<div>', { class: this.classes.join(' ') });
     if (options && options.draggable) {
       this._element.html(letter);

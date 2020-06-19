@@ -33,6 +33,8 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     }, config);
     this.id = contentId;
     H5PData.id = contentId;
+    this.goToNext = this.goToNext.bind(this);
+    this.goToPrevious = this.goToPrevious.bind(this);
   }
 
   attach = ($wrapper: JQuery) => {
@@ -100,36 +102,14 @@ export default class SpellTheWord extends H5P.EventDispatcher {
       html: 'Previous word',
       title: 'Previous word',
       class: 'flh5p-nav-button flh5p-nav-button--prev',
-      click: () => {
-        const index = self.activeWordIndex;
-        const words = self.renderedWords;
-        if (index - 1 > -1) {
-          words[index].hide();
-          words[index - 1].show();
-          self.activeWordIndex = index - 1;
-          self.$processbar.setProgress(index);
-        }
-      }
+      click: () => self.goToPrevious(self),
     });
 
     const $nextButton = H5P.JoubelUI.createButton({
-      html: 'Next word',
+      html: self.renderedWords.length > 1 ? 'Next word' : 'Score',
       title: 'Next word',
       class: 'flh5p-nav-button flh5p-nav-button--next',
-      click: () => {
-        const index = self.activeWordIndex;
-        const words = self.renderedWords;
-        if (words[index + 1]) {
-          words[index].hide();
-          words[index + 1].show();
-          self.activeWordIndex = index + 1;
-          self.$processbar.next();
-          // Update some state on the buttons
-          if (!words[index + 2]) {
-            console.log('Disable ', this);
-          }
-        }
-      }
+      click: () => self.goToNext(self),
     });
 
     const $processbar = H5P.JoubelUI.createProgressbar(this.config.words.length, {});
@@ -146,6 +126,38 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     $wrapper.append($navWrapper);
   }
 
+  goToPrevious = (self: any) => {
+    const index = self.activeWordIndex;
+    const words = self.renderedWords;
+    if (index - 1 > -1) {
+      words[index].hide();
+      words[index - 1].show();
+      self.activeWordIndex = index - 1;
+      self.$processbar.setProgress(index);
+
+      if (self.activeWordIndex < self.renderedWords.length - 1) {
+        self.$nextButton.html('Next');
+      }
+    }
+  }
+
+  goToNext = (self: any) => {
+    const index = self.activeWordIndex;
+    const words = self.renderedWords;
+    if (words.length === 1 || index === words.length - 1) {
+      self.calculateScore();
+    } else if (words[index + 1]) {
+      words[index].hide();
+      words[index + 1].show();
+      self.activeWordIndex = index + 1;
+      self.$processbar.next();
+      // Update some state on the buttons
+      if (!words[index + 2]) {
+        console.log('Disable ', this);
+        self.$nextButton.html('Score');
+      }
+    }
+  }
   // Generate basic markup for main containers
   setupWords = (words: []) => {
     // Container for all the words
@@ -167,6 +179,9 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     this.scoreBar.setScore(0);
     this.activeWordIndex = 0;
     this.$processbar.setProgress(1);
+    if (this.renderedWords.length !== 1) {
+      this.$nextButton.html('Next');
+    }
     this.toggleScorebar();
   }
 
@@ -178,6 +193,8 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     this.points = totalScore;
     this.scoreBar.setScore(totalScore);
     this.isCompleted = true;
+    // Trigger XPI to save score
+    // this.trigger('XAPIScored', 3, 4, 'completed');
     this.toggleScorebar();
   }
 
