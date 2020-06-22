@@ -17,11 +17,11 @@ export function createAppHeader(
   });
 
   const $exitBtn = $('<button>', {
-    class: 'fl-h5p-button fl-h5p-button--transparent',
+    class: 'flh5p-button flh5p-button--transparent',
     html: 'Exit',
     title: 'Exit'
   });
-  console.log(content);
+  // console.log(content);
   // Append all elements to wrapper
   $wrapper.append($appTitle);
   $wrapper.append($exitBtn);
@@ -30,7 +30,7 @@ export function createAppHeader(
 }
 
 export function createAppNavigation($appwrapper: JQuery, steps: []) {
-  console.log(steps);
+  // console.log(steps);
 
   const $wrapper = $('<div>', {
     class: 'flh5p-navigation',

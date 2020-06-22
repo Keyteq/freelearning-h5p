@@ -1,0 +1,40 @@
+.flh5p-step {
+  height: 220px;
+  flex: 1 0 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  position: relative;
+
+  &__icon {
+    z-index: 3;
+    pointer-events: none;
+  }
+}
+
+.flh5p-button--step {
+  background: transparent;
+  border: none;
+  display: block;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: bold;
+  color: #fff;
+  position: absolute;
+  box-sizing: border-box;
+  padding-top: 140px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+  &:hover {
+    cursor: pointer;
+    background: radial-gradient(48.89% 41.51% at 50% 46.96%, #2E4072 0%, #1F2B52 100%);
+  }
+}

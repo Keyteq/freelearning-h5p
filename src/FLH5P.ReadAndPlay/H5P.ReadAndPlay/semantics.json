@@ -30,14 +30,18 @@
           "description": "An icon to be shown with the step"
         },
         {
-          "name": "content",
-          "type": "library",
-          "importance": "high",
-          "label": "The content",
-          "description": "The content to be displayed for the step",
-          "options": [
-            "H5P.MultiChoice 1.14"
-          ]
+          "name": "tasks",
+          "type": "list",
+          "min": 1,
+          "entity": "task",
+          "field": {
+            "name": "task",
+            "type": "library",
+            "label": "Task",
+            "options": [
+              "H5P.MultiChoice 1.14"
+            ]
+          }
         }
       ]
     }
