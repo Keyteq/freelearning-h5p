@@ -6,7 +6,8 @@
   "scripts": {
     "build-js": "webpack --mode=production",
     "dev:spell-the-word": "webpack --config ./src/FreeH5P.SpellTheWord/webpack.config.js --watch",
-    "build:spell-the-word": "webpack --config ./src/FreeH5P.SpellTheWord/webpack.prod.config.js --mode=production"
+    "build:spell-the-word": "webpack --config ./src/FreeH5P.SpellTheWord/webpack.prod.config.js --mode=production",
+    "dev:read-and-play": "webpack --config ./src/FLH5P.ReadAndPlay/webpack.config.js --mode=development --watch"
   },
   "repository": {
     "type": "git",
