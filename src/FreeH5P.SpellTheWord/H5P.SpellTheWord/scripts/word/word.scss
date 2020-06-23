@@ -53,4 +53,11 @@
     font-size: $font-size-medium;
     line-height: 164.5%;
   }
+
+  .flh5p-buttons {
+    flex: 1 0 100%;
+    padding: $spacing-2 0;
+    align-items: center;
+    text-align: center;
+  }
 }

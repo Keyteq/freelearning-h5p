@@ -20,4 +20,8 @@
   &:active, &:hover {
     cursor: move;
   }
+
+  &.ui-state-disabled {
+    opacity: 0.84;
+  }
 }

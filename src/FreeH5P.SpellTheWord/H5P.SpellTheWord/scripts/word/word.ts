@@ -8,7 +8,7 @@ declare var H5P: any;
 const $ = H5P.jQuery;
 
 // Class that manages and creates the markup for one word in the game
-export default class Word {
+export default class Word extends H5P.EventDispatcher {
   $wrapper: JQuery;
   $wordcontainer: JQuery;
   $scorebarWrapper: JQuery;
@@ -29,6 +29,9 @@ export default class Word {
   draggableLetters: Draggable[] = [];
   providedSpelling: string[] = [];
 
+  $scorebutton: JQuery;
+  $resetbutton: JQuery;
+
   constructor(
     config: {
       word: string,
@@ -37,6 +40,7 @@ export default class Word {
     },
     $wrapper: JQuery
   ) {
+    super();
     this.config = config;
     this.$wrapper = $wrapper;
     if (this.config && this.config.word) {
@@ -108,8 +112,33 @@ export default class Word {
     this.$scoreBar = H5P.JoubelUI.createScoreBar(maxPoints, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
     this.$scoreBar.appendTo($scorebar_wrapper);
 
+    const $buttonwrapper = $('<div>', { class: 'flh5p-buttons' });
+    const $scorebtn = H5P.JoubelUI.createButton({
+      title: 'Get score',
+      html: 'Score',
+      click: function () {
+        self.calculateScore();
+      }
+    });
+
+    const $resetbtn = H5P.JoubelUI.createButton({
+      title: 'Reset task',
+      html: 'Reset',
+      click: function () {
+        self.reset();
+        self.show();
+      }
+    });
+
+    $resetbtn.hide();
+    this.$buttonwrapper = $buttonwrapper;
+    this.$scorebutton = $scorebtn;
+    this.$resetbutton = $resetbtn;
+    $scorebtn.appendTo($buttonwrapper);
+    $resetbtn.appendTo($scorebar_wrapper);
     $wordcontainer.append($dropcontainer);
     $wordcontainer.append($draggablecontainer);
+    $wordcontainer.append($buttonwrapper);
     $wordcontainer.append($scorebar_wrapper);
     this.$wrapper.append($wordcontainer);
   }
@@ -146,12 +175,17 @@ export default class Word {
     this.points = score;
     this.$scoreBar.setScore(score);
     this.isComplete = true;
+    this.$resetbutton.show();
+    this.$scorebutton.hide();
+    this.trigger('scored', { points: score  });
     this.toggleScorebar();
 
     return score;
   }
 
   reset() {
+    this.$resetbutton.hide();
+    this.$scorebutton.show();
     this.$wordcontainer.remove();
     this.dropZones = [];
     this.draggableLetters = [];

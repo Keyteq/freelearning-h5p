@@ -18,6 +18,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   isCompleted = false;
   $scorebarWrapper: JQuery;
   scoreBar: any;
+  points = 0;
   $wrapper: JQuery;
   $wordsWrapper: JQuery;
   $prevButton: JQuery;
@@ -87,8 +88,8 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     this.$bottomBar.append($scorebarwrapper);
     this.$scorebarWrapper = $scorebarwrapper;
 
-    this.$bottomBar.append($scorebtn);
-    this.$bottomBar.append($resetbtn);
+    // this.$bottomBar.append($scorebtn);
+    // this.$bottomBar.append($resetbtn);
   }
 
   createNavigation = () => {
@@ -188,10 +189,10 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   // Method for calculating score of current game instance
   calculateScore = () => {
     // Calculate score for all words
-    const scores = this.renderedWords.map((word: Word) => word.calculateScore());
-    const totalScore = scores.reduce((a, b) => a + b, 0);
-    this.points = totalScore;
-    this.scoreBar.setScore(totalScore);
+    const score = this.renderedWords[this.activeWordIndex].calculateScore();
+    // const totalScore = scores.reduce((a, b) => a + b, 0);
+    this.points = this.points + score ;
+    this.scoreBar.setScore(this.points);
     this.isCompleted = true;
     // Trigger XPI to save score
     // this.trigger('XAPIScored', 3, 4, 'completed');
