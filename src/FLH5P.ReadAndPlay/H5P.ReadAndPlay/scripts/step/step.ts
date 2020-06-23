@@ -3,6 +3,7 @@ import './step.scss';
 declare var H5P: any;
 declare var H5PIntegration: any;
 const $ = H5P.jQuery;
+import { H5PData } from '../main';
 
 // extends  H5P.EventDispatcher
 export default class Step {
@@ -31,7 +32,7 @@ export default class Step {
     if (this.config.icon) {
       const $stepIcon = $('<img>', {
         class: 'flh5p-step__icon',
-        src: H5P.getPath(this.config.icon.path, 15),
+        src: H5P.getPath(this.config.icon.path, H5PData.id),
       });
       console.log(H5PIntegration);
       $element.append($stepIcon);

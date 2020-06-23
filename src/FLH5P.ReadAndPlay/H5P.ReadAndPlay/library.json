@@ -5,6 +5,7 @@
   "minorVersion": 0,
   "patchVersion": 0,
   "runnable": 1,
+  "fullscreen": 1,
   "author": "Norad",
   "license": "cc-by-sa",
   "machineName": "H5P.ReadAndPlay",
@@ -17,7 +18,12 @@
   ],
   "preloadedDependencies": [
     {
-      "machineName": "EmbeddedJS",
+      "machineName": "FontAwesome",
+      "majorVersion": 4,
+      "minorVersion": 5
+    },
+    {
+      "machineName": "H5P.IFrameEmbed",
       "majorVersion": 1,
       "minorVersion": 0
     },

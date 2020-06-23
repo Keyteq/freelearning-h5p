@@ -19,7 +19,12 @@ export function createAppHeader(
   const $exitBtn = $('<button>', {
     class: 'flh5p-button flh5p-button--transparent',
     html: 'Exit',
-    title: 'Exit'
+    title: 'Exit',
+    click: () => {
+      if (H5P.isFullscreen) {
+        H5P.exitFullScreen();
+      }
+    }
   });
   // console.log(content);
   // Append all elements to wrapper

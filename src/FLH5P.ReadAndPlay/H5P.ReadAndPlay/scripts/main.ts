@@ -5,6 +5,10 @@ const $ = H5P.jQuery;
 import { createAppHeader, createAppNavigation } from './ui';
 import Step from './step/step';
 
+export const H5PData = {
+  id: '',
+};
+
 export default class ReadAndPlay extends H5P.EventDispatcher {
   $wrapper: JQuery;
   $contantwrapper: JQuery;
@@ -19,9 +23,13 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     super();
     this.config = $.extend(true, {}, {}, config);
     this.id = contentId;
+    H5PData.id = contentId;
     this.contentData = contentData;
     if (this.config.steps[0]) {
       const test = H5P.newRunnable(this.config.steps[0].tasks[0], this.id);
+      this.on('resize', (event: any) => {
+        test.trigger('resize', event);
+      });
       this.contentInstances.push(test);
     }
 
@@ -30,14 +38,14 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
       const instance = H5P.newRunnable(step.tasks[0], contentId);
       return instance;
     });
-
-    console.log(this.contentInstances);
+    // console.log(this.contentInstances);
   }
 
   attach = ($wrapper: JQuery) => {
     const self = this;
     $wrapper.addClass('flh5p-app');
     const $questionwrapper = $('<div>', { class: 'flh5p-question-wrapper' });
+    const $taskcontainer = $('<div>', { class: 'flh5p-task' });
     const $stepswrapper = $('<div>', { class: 'flh5p-steps' });
     createAppHeader($wrapper, { title: this.contentData.metadata.title });
     createAppNavigation($wrapper, []);
@@ -45,16 +53,26 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     this.config.steps.map((step: any, index: number) => {
       this.stepsNav.push(new Step($stepswrapper, step, () => this.loadStep(index)));
     });
-    const $quitbtn = $('<button>', { class: 'flh5p-button flh5p-button--transparent', html: 'Close', click: () =>  {
+    const $quitbtn = $('<button>', { class: 'flh5p-button flh5p-button--transparent flh5p-button--close', html: 'Close', click: () =>  {
       console.log('Close!');
       self.$wrapper.removeClass('flh5p-app--step-open');
-      self.$questioninstance.each(() => {
-        console.log($(this).children());
+      // console.log(this.$questioninstance);
+      // this.$questioninstance.children('.flh5p-task').empty();
+      this.$taskcontainer.each(function () {
         $(this).children().detach();
       });
+      this.$taskcontainer.removeClass();
+      this.$taskcontainer.addClass('flh5p-task');
+      console.log(console.log(this.$questioninstance));
+      /* self.$questioninstance.each(() => {
+        console.log($(this).children());
+        console.log(self.$questioninstance);
+        // $questioninstance.children().detach();
+      }); */
     }});
     const $questionheader = $('<div>', { class: 'flh5p-question-wrapper__header' });
-    const $questioninstance = $('<div>');
+    const $questioninstance = $('<div>', { class: 'flh5p-question-instance'});
+    $questioninstance.append($taskcontainer);
     $questionheader.append($quitbtn);
     $questionwrapper.append($questionheader);
     $questionwrapper.append($questioninstance);
@@ -62,6 +80,7 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     $wrapper.append($questionwrapper);
     this.$wrapper = $wrapper;
     this.$questionwrapper = $questionwrapper;
+    this.$taskcontainer = $taskcontainer;
     this.$questioninstance = $questioninstance;
     this.$stepswrapper = $stepswrapper;
     // this.loadFirstStep();
@@ -70,17 +89,19 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
   loadStep = (index: number) => {
     console.log('load step');
     const step = this.contentInstances[index];
-    if (this.activeInstance) {
+    /* if (this.activeInstance) {
       console.log(this.activeInstance.getCurrentState());
       console.log(this.activeInstance);
       // Sort some stuff
-    }
+    } */
     // Remove previously loaded step
-    this.$questioninstance.each(() => {
+    /* this.$taskcontainer.each(() => {
       console.log($(this).children());
       $(this).children().detach();
-    });
-    step.attach(this.$questioninstance);
+    }); */
+    console.log(this.$taskcontainer);
+    console.log(this.$taskcontainer.parent());
+    step.attach(this.$taskcontainer);
     this.activeInstance = step;
     this.$wrapper.addClass('flh5p-app--step-open');
   }

@@ -39,7 +39,7 @@
             "type": "library",
             "label": "Task",
             "options": [
-              "EmbeddedJS 1.0",
+              "H5P.IFrameEmbed 1.0",
               "H5P.MultiChoice 1.14"
             ]
           }
