@@ -2,7 +2,7 @@ import './draggable.scss';
 declare var H5P: any;
 const $ = H5P.jQuery;
 
-class FLH5PDraggable extends H5P.EventDispatcher {
+class FLH5PDraggable extends (H5P.EventDispatcher as { new(): any; }) {
   $container: JQuery;
   $element: any;
   letter: string;
@@ -21,11 +21,7 @@ class FLH5PDraggable extends H5P.EventDispatcher {
     this.$element.html(this.letter);
     // this.$element.
     this.$element.draggable({
-      revert: 'invalid',
-      stop: (event: JQueryMouseEventObject, ui: any) => {
-        console.log(event);
-        console.log(ui);
-      }
+      revert: 'invalid'
     });
     this.$element.dblclick((event: any, ui: any) => {
       if (!self.$element.parent().hasClass('flh5p-droppable')) {

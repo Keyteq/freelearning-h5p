@@ -14,16 +14,18 @@
   right: 0;
   bottom: 0;
   z-index: 2;
-  transition: all ease 0.5s;
+  transition: opacity ease 0.5s;
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
+  left: -99999px;
 
   &--visible {
     opacity: 1;
     pointer-events: all;
     visibility: visible;
     position: relative;
+    left: 0;
   }
 
   &__image {
