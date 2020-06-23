@@ -46,7 +46,7 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
       this.stepsNav.push(new Step($stepswrapper, step, () => this.loadStep(index)));
     });
     const $quitbtn = $('<button>', { class: 'flh5p-button flh5p-button--transparent', html: 'Close', click: () =>  {
-      console.log('CLOSE!');
+      console.log('Close!');
       self.$wrapper.removeClass('flh5p-app--step-open');
       self.$questioninstance.each(() => {
         console.log($(this).children());
