@@ -1,0 +1,10 @@
+*
+!.gitignore
+!build.sh
+!h5p.json
+!content/
+!content/*
+!content/**/*
+!H5P.ReadAndPlay/
+!H5P.ReadAndPlay/**/*
+!webpack.config.js

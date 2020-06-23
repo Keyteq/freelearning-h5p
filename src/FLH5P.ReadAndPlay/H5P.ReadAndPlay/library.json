@@ -1,0 +1,30 @@
+{
+  "title": "Read and play",
+  "description": "Content type for Freelearning.io.",
+  "majorVersion": 1,
+  "minorVersion": 0,
+  "patchVersion": 0,
+  "runnable": 1,
+  "author": "Norad",
+  "license": "cc-by-sa",
+  "machineName": "H5P.ReadAndPlay",
+  "coreApi": {
+    "majorVersion": 1,
+    "minorVersion": 0
+  },
+  "preloadedJs": [
+    { "path": "dist/bundle.js" }
+  ],
+  "preloadedDependencies": [
+    {
+      "machineName": "EmbeddedJS",
+      "majorVersion": 1,
+      "minorVersion": 0
+    },
+    {
+      "machineName": "H5P.MultiChoice",
+      "majorVersion": 1,
+      "minorVersion": 14
+    }
+  ]
+}
