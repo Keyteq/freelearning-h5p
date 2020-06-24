@@ -70,6 +70,7 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
         // $questioninstance.children().detach();
       }); */
     }});
+
     const $questionheader = $('<div>', { class: 'flh5p-question-wrapper__header' });
     const $questioninstance = $('<div>', { class: 'flh5p-question-instance'});
     $questioninstance.append($taskcontainer);
