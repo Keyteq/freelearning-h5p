@@ -39,6 +39,7 @@
             "type": "library",
             "label": "Task",
             "options": [
+              "H5P.DragText 1.8",
               "H5P.IFrameEmbed 1.0",
               "H5P.ImageSequencing 1.0",
               "H5P.MultiChoice 1.14"

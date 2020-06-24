@@ -15,6 +15,11 @@
       "minorVersion": 5
     },
     {
+      "machineName": "H5P.DragText",
+      "majorVersion": 1,
+      "minorVersion": 8
+    },
+    {
       "machineName": "H5P.IFrameEmbed",
       "majorVersion": 1,
       "minorVersion": 0
