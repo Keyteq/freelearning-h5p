@@ -40,6 +40,7 @@
             "label": "Task",
             "options": [
               "H5P.IFrameEmbed 1.0",
+              "H5P.ImageSequencing 1.0",
               "H5P.MultiChoice 1.14"
             ]
           }

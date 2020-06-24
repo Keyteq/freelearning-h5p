@@ -8,3 +8,5 @@
 !H5P.ReadAndPlay/
 !H5P.ReadAndPlay/**/*
 !webpack.config.js
+
+.git/
