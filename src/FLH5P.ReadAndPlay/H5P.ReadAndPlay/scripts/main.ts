@@ -54,7 +54,7 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
       this.stepsNav.push(new Step($stepswrapper, step, () => this.loadStep(index)));
     });
     const $quitbtn = $('<button>', { class: 'flh5p-button flh5p-button--transparent flh5p-button--close', html: 'Close', click: () =>  {
-      console.log('Close!');
+      self.leaveStep();
       self.$wrapper.removeClass('flh5p-app--step-open');
       // console.log(this.$questioninstance);
       // this.$questioninstance.children('.flh5p-task').empty();
@@ -88,20 +88,18 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
   }
 
   loadStep = (index: number) => {
-    console.log('load step');
     const step = this.contentInstances[index];
-    /* if (this.activeInstance) {
-      console.log(this.activeInstance.getCurrentState());
-      console.log(this.activeInstance);
-      // Sort some stuff
-    } */
-    // Remove previously loaded step
-    /* this.$taskcontainer.each(() => {
-      console.log($(this).children());
-      $(this).children().detach();
-    }); */
-    console.log(this.$taskcontainer);
-    console.log(this.$taskcontainer.parent());
+    if (step.trigger) {
+      step.on('xAPI', (event: any) => {
+        const { statement }= event.data;
+        console.log(statement);
+        if (statement.result && statement.result.completion) {
+          // Task was finished, check what to do next
+          console.log('task finished');
+          console.log(step);
+        }
+      });
+    }
     step.attach(this.$taskcontainer);
     this.activeInstance = step;
     this.$wrapper.addClass('flh5p-app--step-open');
@@ -109,5 +107,6 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
 
   leaveStep = () => {
     console.log('Close step and show navigation again');
+    console.log(this.$questioninstance);
   }
 }

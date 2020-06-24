@@ -34,7 +34,6 @@ export default class Step {
         class: 'flh5p-step__icon',
         src: H5P.getPath(this.config.icon.path, H5PData.id),
       });
-      console.log(H5PIntegration);
       $element.append($stepIcon);
     }
     $element.append($stepbtn);

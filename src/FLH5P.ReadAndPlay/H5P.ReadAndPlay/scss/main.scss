@@ -17,6 +17,7 @@
     .flh5p-question-wrapper {
       height: 100vh;
       display: block;
+      background: #fff;
     }
   }
 
@@ -55,7 +56,7 @@
     button {
       background: transparent;
       border: none;
-      color: #fff;
+      color: #222;
       padding: 16px 0;
       display: inline-block;
 
@@ -79,6 +80,7 @@
 .flh5p-steps {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .flh5p-question-instance {
