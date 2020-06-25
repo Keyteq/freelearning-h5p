@@ -107,7 +107,8 @@ export default class Word extends H5P.EventDispatcher {
       'class': 'flh5p-scorebar flh5p-scorebar--hidden'
     });
 
-    const maxPoints = this.config && this.config.word ? this.config.word.split('').filter((letter) => letter !== ' ').length : 0;
+    const maxPoints = 1;
+    // const maxPoints = this.config && this.config.word ? this.config.word.split('').filter((letter) => letter !== ' ').length : 0;
     this.$scorebarWrapper = $scorebar_wrapper;
     this.$scoreBar = H5P.JoubelUI.createScoreBar(maxPoints, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
     this.$scoreBar.appendTo($scorebar_wrapper);
@@ -172,6 +173,7 @@ export default class Word extends H5P.EventDispatcher {
         }
       }
     });
+    score = Math.floor(score / providedSpelling.length);
     this.points = score;
     this.$scoreBar.setScore(score);
     this.isComplete = true;

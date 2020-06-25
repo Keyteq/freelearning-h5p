@@ -36,6 +36,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     H5PData.id = contentId;
     this.goToNext = this.goToNext.bind(this);
     this.goToPrevious = this.goToPrevious.bind(this);
+    this.calculateScore = this.calculateScore.bind(this);
   }
 
   attach = ($wrapper: JQuery) => {
@@ -82,10 +83,11 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     });
 
     const words = [...this.config.words];
-    const maxScore = words.map((data: any) => data.word.split('').filter((letter: string) => letter !== ' ').length);
-    this.scoreBar = H5P.JoubelUI.createScoreBar(maxScore.reduce((a: number, b: number) => a + b, 0), 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
+    const maxScore = words.length;
+    this.scoreBar = H5P.JoubelUI.createScoreBar(maxScore, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
     this.scoreBar.appendTo($scorebarwrapper);
     this.$bottomBar.append($scorebarwrapper);
+    $resetbtn.appendTo($scorebarwrapper);
     this.$scorebarWrapper = $scorebarwrapper;
 
     // this.$bottomBar.append($scorebtn);
@@ -188,10 +190,17 @@ export default class SpellTheWord extends H5P.EventDispatcher {
 
   // Method for calculating score of current game instance
   calculateScore = () => {
+    console.log('calculateScore for all!');
+    const points = this.renderedWords.map((word: Word) => {
+      console.log(word);
+      console.log(word.calculateScore());
+      return word.calculateScore();
+    });
+
+    console.log(points);
     // Calculate score for all words
-    const score = this.renderedWords[this.activeWordIndex].calculateScore();
     // const totalScore = scores.reduce((a, b) => a + b, 0);
-    this.points = this.points + score ;
+    this.points = points.reduce((a, b) => a + b);
     this.scoreBar.setScore(this.points);
     this.isCompleted = true;
     // Trigger XPI to save score
