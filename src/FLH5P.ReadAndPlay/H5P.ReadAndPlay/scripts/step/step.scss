@@ -7,10 +7,92 @@
   text-align: center;
   color: #fff;
   position: relative;
+  flex-wrap: wrap;
+
+  &:after, &:before {
+    background-repeat: no-repeat;
+    background-position: center 124px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    content: "";
+  }
+
+  &:after {
+    background-image: url('../../assets/images/step-1.png');
+  }
+
+  &:nth-child(2) {
+    &:after {
+      background-image: url('../../assets/images/step-2.png');
+    }
+  }
+
+  &:nth-child(3) {
+    &:after {
+      background-image: url('../../assets/images/step-3.png');
+    }
+  }
+
+  &:nth-child(4) {
+    &:after {
+      background-image: url('../../assets/images/step-4.png');
+    }
+  }
 
   &__icon {
     z-index: 3;
     pointer-events: none;
+  }
+
+  &--completed {
+    // #202842
+    background-image: url('../../assets/images/completed.png');
+    background-repeat: no-repeat;
+    background-position: center 124px;
+    &:after {
+      // content: "\f005";
+      content: "";
+      background-image: url('../../assets/images/completed-star.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      font-family: 'H5PFontAwesome4';
+      font-size: 24px;
+      vertical-align: middle;
+      height: 36px;
+      color: #E7D84D;
+      flex: 1 0 100%;
+      position: absolute;
+      bottom: 60px;
+      top: auto;
+      left: auto;
+      right: auto;
+      width: 100%;
+      text-align: center;
+    }
+    .flh5p-button--step {
+      display: none;
+    }
+  }
+
+  &--next {
+    &:before {
+      background: radial-gradient(48.89% 41.51% at 50% 46.96%, #2E4072 0%, #1F2B52 100%);
+      content: "";
+      position: absolute;
+      display: block;
+      top: 80px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .flh5p-button--step {
+      // background: radial-gradient(48.89% 41.51% at 50% 46.96%, #2E4072 0%, #1F2B52 100%);
+    }
   }
 }
 
@@ -35,6 +117,7 @@
   z-index: 2;
   &:hover {
     cursor: pointer;
-    background: radial-gradient(48.89% 41.51% at 50% 46.96%, #2E4072 0%, #1F2B52 100%);
+    text-decoration: underline;
   }
+
 }

@@ -29,7 +29,7 @@ export function createAppHeader(
   // console.log(content);
   // Append all elements to wrapper
   $wrapper.append($appTitle);
-  $wrapper.append($exitBtn);
+  // $wrapper.append($exitBtn);
 
   $appwrapper.append($wrapper);
 }
