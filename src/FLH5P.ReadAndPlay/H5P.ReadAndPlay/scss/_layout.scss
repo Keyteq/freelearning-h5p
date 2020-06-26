@@ -1,0 +1,15 @@
+@import 'variables';
+
+$small-device-breakpoint: 780px;
+$medium-device-breakpoint: 1090px;
+
+.fl-hide-on-mobile {
+  @media (max-width: $small-device-breakpoint) {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+html.noscroll, body.noscroll {
+  overflow: hidden;
+}

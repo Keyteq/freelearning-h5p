@@ -10,19 +10,21 @@ export default class StepNav {
   $wrapper: JQuery;
   $element: JQuery;
   config: any;
+  index: number;
   callback: Function;
+  isCompleted = false;
 
-  constructor($wrapper: JQuery, data: any, callback?: Function) {
+  constructor($wrapper: JQuery, data: any, callback?: Function, index?: number) {
     this.$wrapper = $wrapper;
     this.config = data;
     this.callback = callback;
-    console.log(this.config);
+    this.index = index;
     this.render();
   }
 
   render() {
     const self = this;
-    const $element = $('<div>', { class: 'flh5p-step' });
+    const $element = $('<div>', { class: 'flh5p-step ' + (this.index > -1 ? 'flh5p-step--' + (this.index + 1 ).toString(): '') });
     const $stepbtn = $('<button>', {
       class: 'flh5p-button flh5p-button--step',
       html: this.config.title,
@@ -44,7 +46,7 @@ export default class StepNav {
   completed() {
     if (!this.$element.hasClass('flh5p-step--completed')) {
       this.$element.addClass('flh5p-step--completed');
-      // this.$element.css({ backgroundImage: 'url(' + H5P.getPath('completed.png', H5PData.id) + ')'})
+      this.isCompleted = true;
     }
   }
 

@@ -1,22 +1,26 @@
+@import 'variables';
+@import 'layout';
 .flh5p-app {
   background-color: #1F2B52;
   min-height: 200px;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: $font-family;
   width: 100%;
-  height: 620px;
+  min-height: 90vh;
+  height: auto;
+  overflow: hidden;
 
   &--step-open {
     .flh5p-app__header {
-      display: none;
+      // display: none;
     }
 
     .flh5p-steps {
-      display: none;
+      // display: none;
     }
     .flh5p-question-wrapper {
-      height: 100vh;
       display: block;
-      background: #fff;
+      height: 95%;
+      // background: #fff;
     }
   }
 
@@ -30,16 +34,6 @@
     h2, h3 {
       color: inherit;
     }
-
-    .flh5p-button {
-      background: transparent;
-      border: none;
-      color: #fff;
-      &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-      }
-    }
   }
 }
 
@@ -49,6 +43,56 @@
   overflow: hidden;
   display: none;
   padding: 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.64);
+  z-index: 4;
+
+  &__modal {
+    background: $white;
+    padding: $spacing-3;
+    max-width: 1096px;
+    box-shadow: 0px 4px 15px rgba(24, 27, 94, 0.07);
+    border-radius: $spacing-2;
+    position: relative;
+    height: calc(100% - 64px);
+    margin: $spacing-4 auto;
+    z-index: 5;
+
+    &__bottombar {
+      height: 64px;
+      box-sizing: border-box;
+      text-align: center;
+
+      .flh5p-button {
+
+        &--next {
+          background: $ui-peach;
+
+          &:after {
+            content: "";
+            background-image: url('assets/images/thumb-up.svg');
+            background-repeat: no-repeat;
+            background-position: center right;
+            width: 40px;
+            height: 22px;
+            padding-left: 24px;
+            display: inline-block;
+            vertical-align: middle;
+            box-sizing: border-box;
+          }
+        }
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 
   &__header {
     text-align: right;
@@ -68,28 +112,23 @@
         cursor: pointer;
       }
 
-      &--close, &--next {
-        &:after {
-          padding-left: 8px;
-          font-family: 'H5PFontAwesome4';
-          font-size: 24px;
-          vertical-align: middle;
-        }
-      }
-
       &--close {
-        &:after {
-          content: "\f057";
-          width: 24px;
-          height: 24px;
-        }
-      }
+        position: absolute;
+        top: -24px;
+        right: -24px;
+        width: 64px;
+        height: 64px;
+        background: #0E7EA1;
+        box-sizing: border-box;
+        background-image: url('assets/images/close.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        border: none;
+        outline: none;
+        border-radius: 100%;
 
-      &--next {
-        &:after {
-          content: "\f087";
-          width: 24px;
-          height: 24px;
+        &:hover {
+          cursor: pointer;
         }
       }
 
@@ -98,12 +137,30 @@
       }
     }
   }
+
+  .flh5p-button {
+    font-size: 16px;
+    line-height: 22px;
+    padding: 10px $spacing-2;
+    font-family: $font-family;
+    border-radius: 100px;
+    border: none;
+    font-weight: 600;
+  }
+
 }
 
 .flh5p-steps {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  @media (max-width: 980px) {
+    flex-direction: column;
+    .flh5p-step {
+      flex: 0 0 280px;
+      width: 100%;
+    }
+  }
 }
 
 .flh5p-question-instance {
@@ -111,13 +168,18 @@
 }
 
 .flh5p-task {
-  min-height: 100%;
+  height: calc(95% - 100px);
+  overflow: auto;
   position: relative;
+  margin: $spacing-3 auto;
   iframe {
     width: 100% !important;
+    max-width: 600px;
+    margin: 24px auto;
     height: 100% !important;
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    right: 0;
+    left: 0;
     // height: 100% !important;
   }
 }

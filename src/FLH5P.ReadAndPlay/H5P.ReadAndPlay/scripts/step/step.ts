@@ -15,6 +15,7 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
 
   constructor(config: any, $container: JQuery) {
     super();
+    this.loadTask = this.loadTask.bind(this);
     this.config = config;
     this.$container = $container;
 
@@ -26,13 +27,11 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
   }
 
   open() {
-    console.log('Open: ', this);
     const firstInstance = this.loadTask(0);
     return firstInstance;
   }
 
   close() {
-    console.log('Close: ', this);
   }
 
   loadTask(index: number) {
@@ -41,21 +40,43 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     // Remove previously attached tasks
     this.emptyContainer();
     instance.attach(this.$container);
-    console.log(instance);
     this.activeTask = instance;
     this.activeIndex = index;
+    // IF the content type is embedded just automatically set it to finished when loaded
+    if (instance.libraryInfo.machineName === 'H5P.IFrameEmbed') {
+      setTimeout(() => {
+        self.trigger('taskCompleted', index);
+        if (!self.runnableInstances[index + 1]) {
+          self.trigger('stepCompleted');
+        }
+        self.completed = true;
+      }, 1000);
+    }
+    console.log(instance);
     // If the task have triggers then we need to listen for them
     if (instance.trigger) {
       instance.on('xAPI', (event: any) => {
+        console.log(event);
         const { statement }= event.data;
         // If the current task have just been completed
         if (statement.result && statement.result.completion) {
           // Task was finished, check what to do next
           self.trigger('taskCompleted', index);
-          if (self.runnableInstances[index + 1]) {
-            // setTimeout(() => self.loadTask(index + 1), 4000);
-          } else {
-            this.completed = true;
+          if (!self.runnableInstances[index + 1]) {
+            self.completed = true;
+            self.trigger('stepCompleted');
+          }
+        }
+      });
+    }
+    if (instance.libraryInfo.machineName === 'H5P.ImageSequencing') {
+      instance.$submit.click(() => {
+        if (instance.isSubmitted) {
+          // Task was finished, check what to do next
+          self.trigger('taskCompleted', index);
+          if (!self.runnableInstances[index + 1]) {
+            self.completed = true;
+            self.trigger('stepCompleted');
           }
         }
       });
@@ -68,7 +89,6 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
       this.loadTask(this.activeIndex + 1);
     } else {
       if (this.completed) {
-        console.log('Step is complete');
         this.trigger('stepCompleted');
       }
     }

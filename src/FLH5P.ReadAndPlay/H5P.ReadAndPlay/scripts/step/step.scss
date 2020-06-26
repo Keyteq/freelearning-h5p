@@ -8,6 +8,26 @@
   color: #fff;
   position: relative;
   flex-wrap: wrap;
+  transform: translate(0%, 0%);
+
+  // Fancy positioning of the different steps on larger screens
+  @media (min-width: 980px) {
+    &--1 {
+      transform: translate(0%, 50%);
+    }
+
+    &--2 {
+      transform: translate(0%, -20%);
+    }
+
+    &--3 {
+      transform: translate(-12%, 71%);
+    }
+
+    &--4 {
+      transform: translate(0%, 16%);
+    }
+  }
 
   &:after, &:before {
     background-repeat: no-repeat;
@@ -53,10 +73,13 @@
     background-image: url('../../assets/images/completed.png');
     background-repeat: no-repeat;
     background-position: center 124px;
+    &:before {
+      display: none;
+    }
     &:after {
       // content: "\f005";
       content: "";
-      background-image: url('../../assets/images/completed-star.svg');
+      background-image: url('../../assets/images/completed-star.svg') !important;
       background-repeat: no-repeat;
       background-position: center;
       font-family: 'H5PFontAwesome4';
@@ -67,6 +90,7 @@
       flex: 1 0 100%;
       position: absolute;
       bottom: 60px;
+      display: block;
       top: auto;
       left: auto;
       right: auto;
