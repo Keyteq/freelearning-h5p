@@ -98,8 +98,19 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     console.log(this.activeIndex);
   }
 
+  complete() {
+    this.completed = true;
+  }
+
   getScore() {
     return 0;
+  }
+
+  reset() {
+    console.log('Reset ', this);
+    this.completed = false;
+    this.activeTask = 0;
+    this.activeIndex = 0;
   }
 
   emptyContainer() {

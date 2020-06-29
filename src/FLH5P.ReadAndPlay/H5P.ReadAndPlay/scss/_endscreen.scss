@@ -1,0 +1,82 @@
+@import 'variables';
+
+.flh5p-endscreen {
+
+  &__steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 600px;
+    position: relative;
+    margin: $spacing-3 auto;
+  }
+
+  &__step {
+    position: relative;
+    flex: 0 0 88px;
+    height: 88px;
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      vertical-align: middle;
+    }
+    &:after {
+      content: "";
+      background-image: url('assets/images/completed-star.svg') !important;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 95%;
+      display: block;
+      width: 36px;
+      height: 36px;
+      position: absolute;
+      bottom: -36px;
+      left: 50%;
+      margin-left: -18px;
+    }
+  }
+
+  &__feedback {
+    max-width: 1096px;
+    width: 95%;
+    min-height: 200px;
+    padding: $spacing-8;
+    position: relative;
+    display: flex;
+    margin: 80px auto;
+    border-radius: $spacing-2;
+    background-color: $white;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    &__title {
+      font-size: 24px;
+      text-align: center;
+      display: block;
+      flex: 1 0 100%;
+    }
+
+    .flh5p-button {
+      border: 1px solid $ui-peach;
+      background: transparent;
+      font-weight: 600;
+      font-family: $font-family;
+      padding: 10px 16px;
+      margin: 0 $spacing;
+      color: $text-default;
+      text-decoration: none;
+      border-radius: 100px;
+      
+      &--home {
+        background: $ui-peach;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

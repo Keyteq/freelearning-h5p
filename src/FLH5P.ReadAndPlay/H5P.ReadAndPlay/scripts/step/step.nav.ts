@@ -38,6 +38,11 @@ export default class StepNav {
       });
       $element.append($stepIcon);
     }
+    const $stepNumber = $('<div>', {
+      class: 'flh5p-step__number flh5p-step__number--' + (this.index + 1).toString(),
+    });
+    $element.append($stepNumber);
+    
     $element.append($stepbtn);
     this.$wrapper.append($element);
     this.$element = $element;
@@ -48,6 +53,11 @@ export default class StepNav {
       this.$element.addClass('flh5p-step--completed');
       this.isCompleted = true;
     }
+  }
+
+  reset() {
+    this.$element.removeClass('flh5p-step--completed');
+    this.removeNext();
   }
 
   setAsNext() {

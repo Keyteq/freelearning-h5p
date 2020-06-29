@@ -30,6 +30,7 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     this.goToNextTask = this.goToNextTask.bind(this);
     this.completeStep = this.completeStep.bind(this);
     this.leaveStep = this.leaveStep.bind(this);
+    this.resetAll = this.resetAll.bind(this);
   }
 
   attach = ($wrapper: JQuery) => {
@@ -82,7 +83,6 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
       return new Step(step, $taskcontainer);
     });
     this.stepsNav[0].setAsNext();
-    // this.loadFirstStep();
   }
 
   loadStep = (index: number) => {
@@ -122,9 +122,18 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
   }
 
   completeStep = (index: number) => {
-    console.log('completeStep ', index);
-    console.log(this.stepsNav[index]);
     this.stepsNav[index].completed();
+    this.steps[index].complete();
+    let incompleteStepFound = false;
+    // Check if all steps are completed
+    this.steps.forEach((step: Step) => {
+      if (!step.completed) {
+        incompleteStepFound = true;
+      }
+    });
+    if (!incompleteStepFound) {
+      this.loadEndScreen();
+    }
   }
 
   goToNextTask = () => {
@@ -140,5 +149,52 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     });
     this.$taskcontainer.removeClass();
     this.$taskcontainer.addClass('flh5p-task');
+  }
+
+  loadEndScreen = () => {
+    const $endwrapper = $('<div>', { class: 'flh5p-endscreen' });
+    this.$stepswrapper.hide();
+    const $completedSteps = $('<div>', { class: 'flh5p-endscreen__steps' });
+
+    this.config.steps.forEach((step: any) => {
+      const $step = $('<div>', { class: 'flh5p-endscreen__step', html: '' });
+      $step.append($('<img>', { src: H5P.getPath(step.icon.path, H5PData.id) }))
+      $completedSteps.append($step);
+    });
+
+    const $feedbackwrapper = $('<div>', { class: 'flh5p-endscreen__feedback' });
+    const $feedbackTitle = $('<h2>', {
+      class: 'flh5p-endscreen__feedback__title',
+      html: this.config.endscreen && this.config.endscreen.title ? this.config.endscreen.title : 'Well done!',
+    });
+
+    const restartBtn = $('<button>', {
+      class: 'flh5p-button flh5p-button--restart',
+      html: 'Go again',
+      click: this.resetAll,
+    });
+
+    const goToHomeBtn = $('<a>', {
+      href: '/',
+      class: 'flh5p-button flh5p-button--home',
+      html: 'Home'
+    });
+
+    $feedbackwrapper.append($feedbackTitle);
+    $feedbackwrapper.append(restartBtn);
+    $feedbackwrapper.append(goToHomeBtn);
+
+    $endwrapper.append($completedSteps);
+    $endwrapper.append($feedbackwrapper);
+    this.$wrapper.append($endwrapper);
+
+  }
+
+  resetAll = () => {
+    $('.flh5p-endscreen').remove();
+    this.$stepswrapper.show();
+    this.stepsNav.forEach((stepNav: StepNav) => stepNav.reset());
+    this.steps.forEach((step: Step) => step.reset());
+    this.stepsNav[0].setAsNext();
   }
 }
