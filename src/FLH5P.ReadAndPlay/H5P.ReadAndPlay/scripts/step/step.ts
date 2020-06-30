@@ -69,6 +69,20 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
         }
       });
     }
+
+    if (instance.libraryInfo.machineName === 'H5P.SpellTheWord') {
+      instance.on('scored', () => {
+        console.log('Scored');
+        console.log(instance.points);
+        if (instance.isCompleted) {
+          if (!self.runnableInstances[index + 1]) {
+            self.completed = true;
+            self.trigger('stepCompleted');
+          }
+        }
+      });
+    }
+
     if (instance.libraryInfo.machineName === 'H5P.ImageSequencing') {
       instance.$submit.click(() => {
         if (instance.isSubmitted) {
@@ -111,9 +125,12 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     this.completed = false;
     this.activeTask = 0;
     this.activeIndex = 0;
+    this.emptyContainer();
   }
 
   emptyContainer() {
-
+    this.$container.each(() => {
+      $(this).children().detach();
+    });
   }
 }

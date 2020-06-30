@@ -84,6 +84,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
 
     const words = [...this.config.words];
     const maxScore = words.length;
+    this.maxScore = maxScore;
     this.scoreBar = H5P.JoubelUI.createScoreBar(maxScore, 'Letters right', 'helpText', 'scoreExplanationButtonLabel');
     this.scoreBar.appendTo($scorebarwrapper);
     this.$bottomBar.append($scorebarwrapper);
@@ -190,19 +191,20 @@ export default class SpellTheWord extends H5P.EventDispatcher {
 
   // Method for calculating score of current game instance
   calculateScore = () => {
-    console.log('calculateScore for all!');
+    // console.log('calculateScore for all!');
     const points = this.renderedWords.map((word: Word) => {
       console.log(word);
       console.log(word.calculateScore());
       return word.calculateScore();
     });
 
-    console.log(points);
+    // console.log(points);
     // Calculate score for all words
     // const totalScore = scores.reduce((a, b) => a + b, 0);
     this.points = points.reduce((a, b) => a + b);
     this.scoreBar.setScore(this.points);
     this.isCompleted = true;
+    this.trigger('scored', { points: this.points, maxPoints: this.maxScore });
     // Trigger XPI to save score
     // this.trigger('XAPIScored', 3, 4, 'completed');
     this.toggleScorebar();
@@ -226,7 +228,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   }
 
   getMaxScore = () => {
-    return 9;
+    return this.maxScore;
   }
 
   showSolutions = () => {
@@ -237,7 +239,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     this.resetAll();
   }
 
-  getXAPIData() {
+  getXAPIData = () => {
     console.log('getXAPIData');
   }
 }

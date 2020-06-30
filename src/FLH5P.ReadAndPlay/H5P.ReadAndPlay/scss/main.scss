@@ -64,6 +64,11 @@
     margin: $spacing-4 auto;
     z-index: 5;
 
+    // Override dark bg from Spell the Word
+    .flh5p-app {
+      background: $white;
+    }
+
     &__bottombar {
       height: 64px;
       box-sizing: border-box;

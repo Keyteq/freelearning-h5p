@@ -152,13 +152,19 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
   }
 
   loadEndScreen = () => {
+    // Remove possible previous endscreens
+    $('.flh5p-endscreen').remove();
     const $endwrapper = $('<div>', { class: 'flh5p-endscreen' });
     this.$stepswrapper.hide();
     const $completedSteps = $('<div>', { class: 'flh5p-endscreen__steps' });
 
     this.config.steps.forEach((step: any) => {
       const $step = $('<div>', { class: 'flh5p-endscreen__step', html: '' });
-      $step.append($('<img>', { src: H5P.getPath(step.icon.path, H5PData.id) }))
+      if (step.icon && step.icon.path) {
+        $step.append($('<img>', { src: H5P.getPath(step.icon.path, H5PData.id) }))
+      } else {
+        $step.html(step.title);
+      }
       $completedSteps.append($step);
     });
 

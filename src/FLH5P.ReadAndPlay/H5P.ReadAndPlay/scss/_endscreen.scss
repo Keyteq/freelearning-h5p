@@ -15,6 +15,11 @@
     position: relative;
     flex: 0 0 88px;
     height: 88px;
+    color: $white;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+
     img {
       width: 100%;
       height: auto;
@@ -69,7 +74,7 @@
       color: $text-default;
       text-decoration: none;
       border-radius: 100px;
-      
+
       &--home {
         background: $ui-peach;
       }
