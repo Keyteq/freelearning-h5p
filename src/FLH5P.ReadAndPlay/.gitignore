@@ -1,6 +1,7 @@
-// *
+*
 !.gitignore
 !build.sh
+!build-with-dependencies.sh
 !h5p.json
 !content/
 !content/*
