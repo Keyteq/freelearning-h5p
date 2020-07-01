@@ -43,9 +43,49 @@
               "H5P.IFrameEmbed 1.0",
               "H5P.ImageSequencing 1.0",
               "H5P.MultiChoice 1.14",
-              "H5P.SpellTheWord 1.0"
+              "H5P.SpellTheWord 1.0",
+              "H5P.Text 1.1"
             ]
           }
+        }
+      ]
+    }
+  },
+  {
+    "label": "Recommended for after completed",
+    "name": "recommended",
+    "description": "Some recommendations of content to visit after completing the game.",
+    "type": "list",
+    "entity": "recommendation",
+    "min": 1,
+    "field": {
+      "name": "recommendation",
+      "label": "Recommendation",
+      "type": "group",
+      "fields": [
+        {
+          "label": "Image",
+          "name": "image",
+          "type": "image",
+          "description": "Image to be shown with the recommendation"
+        },
+        {
+          "label": "Title",
+          "name": "title",
+          "type": "text",
+          "description": "Title of recommendation"
+        },
+        {
+          "label": "Description",
+          "name": "title",
+          "type": "text",
+          "description": "Description of the recommendation"
+        },
+        {
+          "label": "Link",
+          "name": "link",
+          "type": "text",
+          "description": "URI to content."
         }
       ]
     }

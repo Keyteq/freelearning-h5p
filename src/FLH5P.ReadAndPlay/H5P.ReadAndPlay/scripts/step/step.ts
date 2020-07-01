@@ -43,7 +43,7 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     this.activeTask = instance;
     this.activeIndex = index;
     // IF the content type is embedded just automatically set it to finished when loaded
-    if (instance.libraryInfo.machineName === 'H5P.IFrameEmbed') {
+    if (instance.libraryInfo.machineName === 'H5P.IFrameEmbed' || instance.libraryInfo.machineName === 'H5P.Text') {
       setTimeout(() => {
         self.trigger('taskCompleted', index);
         if (!self.runnableInstances[index + 1]) {

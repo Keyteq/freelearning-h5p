@@ -189,4 +189,11 @@
     left: 0;
     // height: 100% !important;
   }
+  &.h5p-text {
+    padding: $spacing-3;
+    display: block;
+    max-width: 520px;
+    position: relative;
+    margin: $spacing-3 auto;
+  }
 }

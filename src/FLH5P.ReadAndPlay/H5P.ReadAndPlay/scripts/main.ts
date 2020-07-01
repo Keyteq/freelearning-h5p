@@ -161,7 +161,7 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     this.config.steps.forEach((step: any) => {
       const $step = $('<div>', { class: 'flh5p-endscreen__step', html: '' });
       if (step.icon && step.icon.path) {
-        $step.append($('<img>', { src: H5P.getPath(step.icon.path, H5PData.id) }))
+        $step.append($('<img>', { src: H5P.getPath(step.icon.path, this.id) }))
       } else {
         $step.html(step.title);
       }
@@ -190,10 +190,29 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     $feedbackwrapper.append(restartBtn);
     $feedbackwrapper.append(goToHomeBtn);
 
+    const $recommendations = $('<div>', { class: 'flh5p-endscreen__recommendations' });
+    const recommended = this.config.recommended || [];
+    recommended.forEach((recommendation: any) => {
+      const $rec = $('<div>', { class: 'flh5p-endscreen__card' });
+      const $linkwrapper = $('<a>', { class: 'flh5p-endscreen__card__link', href: recommendation.link || '/' });
+      const $title = $('<div>', { class: 'flh5p-endscreen__card__title', html: recommendation.title });
+      const $description = $('<p>', { class: 'flh5p-endscreen__card__description', html: recommendation.description || 'Description goes here' });
+      const $image = $('<div>', { class:  'flh5p-endscreen__card__image' });
+      if (recommendation.image) {
+        $image.css({ backgroundImage: 'url(' + H5P.getPath(recommendation.image.path, this.id) + ')'});
+      }
+      $linkwrapper.append($image);
+      $linkwrapper.append($title);
+      $linkwrapper.append($description);
+      $rec.append($linkwrapper);
+      $recommendations.append($rec);
+    });
+    // Append recommendations to feedbackwrapper
+    $feedbackwrapper.append($recommendations);
+
     $endwrapper.append($completedSteps);
     $endwrapper.append($feedbackwrapper);
     this.$wrapper.append($endwrapper);
-
   }
 
   resetAll = () => {
@@ -201,6 +220,5 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     this.$stepswrapper.show();
     this.stepsNav.forEach((stepNav: StepNav) => stepNav.reset());
     this.steps.forEach((step: Step) => step.reset());
-    this.stepsNav[0].setAsNext();
   }
 }

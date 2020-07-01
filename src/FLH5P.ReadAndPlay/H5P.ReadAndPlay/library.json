@@ -3,7 +3,7 @@
   "description": "Content type for Freelearning.io.",
   "majorVersion": 1,
   "minorVersion": 0,
-  "patchVersion": 6,
+  "patchVersion": 7,
   "runnable": 1,
   "fullscreen": 1,
   "author": "Norad",
@@ -41,6 +41,11 @@
       "machineName": "H5P.MultiChoice",
       "majorVersion": 1,
       "minorVersion": 14
+    },
+    {
+      "machineName": "H5P.Text",
+      "majorVersion": 1,
+      "minorVersion": 1
     }
   ]
 }
