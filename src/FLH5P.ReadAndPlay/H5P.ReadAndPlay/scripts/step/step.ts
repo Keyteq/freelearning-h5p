@@ -32,6 +32,9 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
   }
 
   close() {
+    if (this.completed) {
+      this.trigger('stepCompleted');
+    }
   }
 
   loadTask(index: number) {
@@ -42,17 +45,22 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     instance.attach(this.$container);
     this.activeTask = instance;
     this.activeIndex = index;
-    // IF the content type is embedded just automatically set it to finished when loaded
-    if (instance.libraryInfo.machineName === 'H5P.IFrameEmbed' || instance.libraryInfo.machineName === 'H5P.Text') {
-      setTimeout(() => {
-        self.trigger('taskCompleted', index);
-        if (!self.runnableInstances[index + 1]) {
-          self.trigger('stepCompleted');
+    switch (instance.libraryInfo.machineName) {
+      case 'H5P.IFrameEmbed':
+      case 'H5P.Text':
+      case 'H5P.InteractiveVideo':
+      case 'H5P.MemoryGame':
+      case 'H5P.DragText': {
+        this.trigger('taskCompleted', index);
+        if (!this.runnableInstances[index + 1]) {
+          self.completed = true;
         }
-        self.completed = true;
-      }, 1000);
+        break;
+      }
+      default: {
+        break;
+      }
     }
-    console.log(instance);
     // If the task have triggers then we need to listen for them
     if (instance.trigger) {
       instance.on('xAPI', (event: any) => {
@@ -72,8 +80,6 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
 
     if (instance.libraryInfo.machineName === 'H5P.SpellTheWord') {
       instance.on('scored', () => {
-        console.log('Scored');
-        console.log(instance.points);
         if (instance.isCompleted) {
           if (!self.runnableInstances[index + 1]) {
             self.completed = true;
@@ -125,6 +131,7 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     this.completed = false;
     this.activeTask = 0;
     this.activeIndex = 0;
+    this.close();
     this.emptyContainer();
   }
 
