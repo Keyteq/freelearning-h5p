@@ -12,6 +12,36 @@
   position: relative;
   flex-wrap: wrap;
   transform: translate(0%, 0%);
+  transition: all ease 0.33s;
+
+  &:before {
+    background: radial-gradient(48.89% 41.51% at 50% 46.96%, #2E4072 0%, #1F2B52 100%);
+    background-position: center center;
+    content: "";
+    position: absolute;
+    display: block;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    backface-visibility: hidden;
+    transform: scale(1.0);
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    &:before {
+      background-position: center center;
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+  }
 
   @media (max-width: 980px) {
     max-width: 320px;
@@ -30,18 +60,31 @@
   @media (min-width: 980px) {
     &--1 {
       transform: translate(0%, 50%);
+
+      &:hover {
+        transform: translate(0%, 30%);
+      }
     }
 
     &--2 {
       transform: translate(0%, -20%);
+      &:hover {
+        transform: translate(0%, -40%);
+      }
     }
 
     &--3 {
       transform: translate(-12%, 71%);
+      &:hover {
+        transform: translate(-12%, 51%);
+      }
     }
 
     &--4 {
       transform: translate(0%, 16%);
+      &:hover {
+        transform: translate(0%, -4%);
+      }
     }
   }
 
@@ -55,6 +98,10 @@
     bottom: 0;
     display: block;
     content: "";
+  }
+
+  &:before {
+    transition: transform ease 0.3s;
   }
 
   &:after {
@@ -82,6 +129,8 @@
   &__icon {
     z-index: 3;
     pointer-events: none;
+    max-width: 100px;
+    height: auto;
   }
 
   &__number {
@@ -158,14 +207,10 @@
       content: "";
       position: absolute;
       display: block;
-      top: 80px;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-
-    .flh5p-button--step {
-      // background: radial-gradient(48.89% 41.51% at 50% 46.96%, #2E4072 0%, #1F2B52 100%);
+      visibility: visible;
+      opacity: 1;
+      transform: scale(1.0);
+      box-shadow: 0px 4px 8px transparent;
     }
   }
 }
@@ -189,9 +234,10 @@
   bottom: 0;
   width: 100%;
   z-index: 2;
+  transform: translateY(0px);
+  transition: all ease 0.5s;
   &:hover {
     cursor: pointer;
-    text-decoration: underline;
   }
 
 }

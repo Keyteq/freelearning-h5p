@@ -62,7 +62,16 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     const $wrapperModal = $('<div>', { class: 'flh5p-question-wrapper__modal' });
 
 
+    // Add content to question header
+    // Nr icon
+    const $modalNumberIcon = $('<div>', { class: 'flh5p-modal-number' });
+    const $modalStepIcon = $('<div>', { class: 'flh5p-modal-stepicon' });
+    const $modalnextbutton = $('<button>', { class: 'flh5p-modal__next' });
+    $questionheader.append($modalNumberIcon);
+    $questionheader.append($modalStepIcon);
+    $questionheader.append($modalnextbutton);
     $questionheader.append($quitbtn);
+
     $bottombar.append($nextbtn);
     $wrapperModal.append($questionheader);
     $wrapperModal.append($taskcontainer);
@@ -91,6 +100,16 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     this.activeStep = this.steps[index];
     this.activeIndex = index;
     this.$wrapper.addClass('flh5p-app--step-open');
+    const $nrIcon = $('.flh5p-modal-number');
+    $nrIcon.removeClass();
+    $nrIcon.addClass('flh5p-modal-number flh5p-modal-number--' + (index + 1).toString());
+    if (this.activeStep.config.icon) {
+      const $stepIconEl = $('.flh5p-modal-stepicon');
+      console.log(H5P.getPath(this.activeStep.config.icon.path, this.id));
+      $stepIconEl.html('');
+      $stepIconEl.append($('<img>', { src: H5P.getPath(this.activeStep.config.icon.path, this.id) }));
+    }
+
     this.activeStep.on('taskCompleted', () => {
       // console.log('activeStep triggered taskCompleted');
       // console.log(index);

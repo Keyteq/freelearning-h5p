@@ -17,19 +17,19 @@ export function createAppHeader(
   });
 
   const $exitBtn = $('<button>', {
-    class: 'flh5p-button flh5p-button--transparent',
-    html: 'Exit',
-    title: 'Exit',
+    class: 'flh5p-button flh5p-button--home',
+    title: 'Go back to home',
     click: () => {
       if (H5P.isFullscreen) {
         H5P.exitFullScreen();
+      } else {
+        console.log(window);
       }
     }
   });
-  // console.log(content);
   // Append all elements to wrapper
+  $wrapper.append($exitBtn);
   $wrapper.append($appTitle);
-  // $wrapper.append($exitBtn);
 
   $appwrapper.append($wrapper);
 }

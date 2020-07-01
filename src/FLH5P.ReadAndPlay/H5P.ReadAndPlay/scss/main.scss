@@ -20,8 +20,18 @@
       // display: none;
     }
     .flh5p-question-wrapper {
-      display: block;
+      opacity: 1;
+      visibility: visible;
       height: 95%;
+      overflow: auto;
+      z-index: 10;
+      pointer-events: auto;
+
+      &__modal {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0%);
+      }
       // background: #fff;
     }
   }
@@ -32,9 +42,30 @@
     box-sizing: border-box;
     color: #fff;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    // justify-content: space-between;
     h2, h3 {
       color: inherit;
+    }
+
+    .flh5p-button {
+      &--home {
+        width: 56px;
+        height: 56px;
+        box-sizing: border-box;
+        background: $ui-peach;
+        border-radius: 100%;
+        background-image: url('assets/images/home.svg');
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+        background-position: center;
+        border: none;
+        outline: none;
+        margin-right: $spacing-4;
+      }
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
@@ -43,15 +74,19 @@
 .flh5p-question-wrapper {
   height: auto;
   overflow: hidden;
-  display: none;
+  display: block;
   padding: 24px;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.64);
-  z-index: 4;
+  background: rgba(31, 43, 82, 0.96);
+  transition: all ease 0.5s;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
 
   &__modal {
     background: $white;
@@ -60,9 +95,13 @@
     box-shadow: 0px 4px 15px rgba(24, 27, 94, 0.07);
     border-radius: $spacing-2;
     position: relative;
-    height: calc(100% - 64px);
-    margin: $spacing-4 auto;
+    height: calc(100% - 96px);
+    margin: $spacing-6 auto;
     z-index: 5;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+    transition: all ease 0.5s;
 
     // Override dark bg from Spell the Word
     .flh5p-app {
@@ -75,7 +114,6 @@
       text-align: center;
 
       .flh5p-button {
-
         &--next {
           background: $ui-peach;
 
@@ -102,19 +140,69 @@
   }
 
   &__header {
-    text-align: right;
-    .flh5p-button {
+    // text-align: right;
+    font-family: $font-family;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // Number indicator in header
+    .flh5p-modal-number {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+
+      &--1 {
+        background-image: url('assets/images/1.svg');
+      }
+
+      &--2 {
+        background-image: url('assets/images/2.svg');
+      }
+
+      &--3 {
+        background-image: url('assets/images/3.svg');
+      }
+
+      &--4 {
+        background-image: url('assets/images/4.svg');
+      }
+    }
+
+    // Step icon if available
+    .flh5p-modal-stepicon {
+      flex: 0 0 120px;
+      height: 100px;
+      background-image: url('assets/images/modal-step-bg.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+
+      img {
+        width: 73px;
+        display: block;
+        position: relative;
+        margin: $spacing auto;
+      }
+    }
+
+    // Next button
+    .flh5p-modal__next {
+      flex: 0 0 120px;
+      height: 48px;
+      border: 1px solid $ui-peach;
       background: transparent;
-      border: none;
-      color: #222;
-      padding: 8px 16px;
-      display: inline-block;
       border-radius: 100px;
-      font-family: 'Noto Sans', sans-serif;
-      font-size: 16px;
-      line-height: 22px;
-      font-weight: 600;
-      margin-left: 16px;
+      &:after {
+        content: "Icon";
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .flh5p-button {
       &:hover {
         cursor: pointer;
       }
@@ -133,9 +221,12 @@
         border: none;
         outline: none;
         border-radius: 100%;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
 
         &:hover {
           cursor: pointer;
+          box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.52);
+          background-color: darken(#0E7EA1, 2);
         }
       }
 
@@ -161,7 +252,10 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  align-items: center;
+  padding-top: 100px;
   @media (max-width: 980px) {
+    padding-top: $spacing-5;
     flex-direction: column;
     .flh5p-step {
       flex: 0 0 280px;
