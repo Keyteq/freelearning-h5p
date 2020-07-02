@@ -45,6 +45,14 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     instance.attach(this.$container);
     this.activeTask = instance;
     this.activeIndex = index;
+    // If step have more tasks, show next button else hide it
+    if (this.runnableInstances[index + 1]) {
+      $('.flh5p-button--next').show();
+    } else {
+      $('.flh5p-button--next').hide();
+    }
+    $('.flh5p-button--step-restart').show();
+
     switch (instance.libraryInfo.machineName) {
       case 'H5P.IFrameEmbed':
       case 'H5P.Text':
@@ -71,8 +79,7 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
           // Task was finished, check what to do next
           self.trigger('taskCompleted', index);
           if (!self.runnableInstances[index + 1]) {
-            self.completed = true;
-            self.trigger('stepCompleted');
+            self.triggerCompleted();
           }
         }
       });
@@ -82,8 +89,7 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
       instance.on('scored', () => {
         if (instance.isCompleted) {
           if (!self.runnableInstances[index + 1]) {
-            self.completed = true;
-            self.trigger('stepCompleted');
+            self.triggerCompleted();
           }
         }
       });
@@ -95,8 +101,7 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
           // Task was finished, check what to do next
           self.trigger('taskCompleted', index);
           if (!self.runnableInstances[index + 1]) {
-            self.completed = true;
-            self.trigger('stepCompleted');
+            self.triggerCompleted();
           }
         }
       });
@@ -110,12 +115,20 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     } else {
       if (this.completed) {
         this.trigger('stepCompleted');
+        $('.flh5p-button--next').hide();
       }
     }
   }
 
   goToPreviousTask() {
     console.log(this.activeIndex);
+  }
+
+  triggerCompleted() {
+    this.completed = true;
+    this.trigger('stepCompleted');
+    $('.flh5p-button--next').hide();
+    $('.flh5p-button--step-restart').show();
   }
 
   complete() {
@@ -126,8 +139,11 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     return 0;
   }
 
+  restart() {
+    console.log('restart ', this);
+  }
+
   reset() {
-    console.log('Reset ', this);
     this.completed = false;
     this.activeTask = 0;
     this.activeIndex = 0;

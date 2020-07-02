@@ -1,0 +1,91 @@
+@import 'variables';
+
+.flh5p-question-wrapper {
+  &__modal {
+    background: $white;
+    padding: $spacing-3;
+    max-width: 1096px;
+    box-shadow: 0px 4px 15px rgba(24, 27, 94, 0.07);
+    border-radius: $spacing-2;
+    position: relative;
+    height: calc(100% - 96px);
+    margin: $spacing-6 auto;
+    z-index: 5;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+    transition: all ease 0.5s;
+    height: 100%;
+
+    // Override dark bg from Spell the Word
+    .flh5p-app {
+      background: $white;
+    }
+
+    @media (max-width: 980px) {
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    &__bottombar {
+      height: 64px;
+      box-sizing: border-box;
+      text-align: center;
+
+      .flh5p-button {
+        &--next {
+          flex: 0 0 120px;
+          height: 48px;
+          border: 1px solid $ui-peach;
+          background: $white;
+          border-radius: 100px;
+          box-sizing: border-box;
+          display: none;
+          font-weight: 600;
+          vertical-align: middle;
+          &:after {
+            content: "";
+            width: 24px;
+            height: 24px;
+            background-image: url('assets/images/refresh.svg');
+            background-repeat: no-repeat;
+            background-size: 95%;
+            background-position: center;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+
+        &--step-restart {
+          flex: 0 0 120px;
+          height: 48px;
+          border: 1px solid $ui-peach;
+          background: $white;
+          border-radius: 100px;
+          box-sizing: border-box;
+          display: none;
+          font-weight: 600;
+          vertical-align: middle;
+          &:after {
+            content: "";
+            width: 24px;
+            height: 24px;
+            background-image: url('assets/images/refresh.svg');
+            background-repeat: no-repeat;
+            background-size: 95%;
+            background-position: center;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

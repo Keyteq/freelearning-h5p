@@ -1,0 +1,39 @@
+@import 'variables';
+/* Custom styling for different content types */
+
+.flh5p-task {
+  position: relative;
+  margin: $spacing-3 auto;
+  overflow: auto;
+  height: auto;
+  max-height: calc(100% - 196px);
+  min-height: 50%;
+
+  &--embed {
+    min-height: 80%;
+  }
+
+  iframe {
+    width: 100% !important;
+    max-width: 520px;
+    margin: 24px auto;
+    // height: 100% !important;
+    position: absolute;
+    right: 0;
+    left: 0;
+    // height: 100% !important;
+  }
+
+  &.h5p-memory-game,
+  &.h5p-text,
+  &.h5p-image-sequencing,
+  &.h5p-multichoice {
+    padding: $spacing-3;
+    display: block;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    margin: $spacing-3 auto;
+    box-sizing: border-box;
+  }
+}

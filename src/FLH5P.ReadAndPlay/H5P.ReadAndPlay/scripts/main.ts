@@ -31,6 +31,8 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     this.completeStep = this.completeStep.bind(this);
     this.leaveStep = this.leaveStep.bind(this);
     this.resetAll = this.resetAll.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
+    this.restartStep = this.restartStep.bind(this);
   }
 
   attach = ($wrapper: JQuery) => {
@@ -56,23 +58,28 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
       click: () => self.goToNextTask(),
     });
 
+    const $restartStepBtn = $('<button>', { class: 'flh5p-button--step-restart', html: 'Go again', click: this.restartStep });
+
     const $questionheader = $('<div>', { class: 'flh5p-question-wrapper__header' });
     const $questioninstance = $('<div>', { class: 'flh5p-question-instance'});
     const $bottombar = $('<div>', { class: 'flh5p-question-wrapper__modal__bottombar' });
     const $wrapperModal = $('<div>', { class: 'flh5p-question-wrapper__modal' });
 
-
     // Add content to question header
     // Nr icon
     const $modalNumberIcon = $('<div>', { class: 'flh5p-modal-number' });
     const $modalStepIcon = $('<div>', { class: 'flh5p-modal-stepicon' });
-    const $modalnextbutton = $('<button>', { class: 'flh5p-modal__next' });
+    const $modalnextbutton = $('<button>', { class: 'flh5p-modal__next', click: this.handleNextClick });
+    const $modalfinishedbutton = $('<button>', { html: 'Finished', class: 'flh5p-modal__finished', click: this.handleNextClick });
     $questionheader.append($modalNumberIcon);
     $questionheader.append($modalStepIcon);
     $questionheader.append($modalnextbutton);
+    $questionheader.append($modalfinishedbutton);
     $questionheader.append($quitbtn);
 
     $bottombar.append($nextbtn);
+    $bottombar.append($restartStepBtn);
+
     $wrapperModal.append($questionheader);
     $wrapperModal.append($taskcontainer);
     $wrapperModal.append($bottombar);
@@ -105,39 +112,39 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     $nrIcon.addClass('flh5p-modal-number flh5p-modal-number--' + (index + 1).toString());
     if (this.activeStep.config.icon) {
       const $stepIconEl = $('.flh5p-modal-stepicon');
-      console.log(H5P.getPath(this.activeStep.config.icon.path, this.id));
       $stepIconEl.html('');
       $stepIconEl.append($('<img>', { src: H5P.getPath(this.activeStep.config.icon.path, this.id) }));
     }
 
+    // If activeStep is an embed, add class to flh5p-task to set height
+    if (this.activeTask.libraryInfo.machineName === 'H5P.IFrameEmbed') {
+      $('.flh5p-task').addClass('flh5p-task--embed');
+    }
+
+    if (!this.steps[index + 1]) {
+      $('.flh5p-modal__next').hide();
+      $('.flh5p-modal__finished').show();
+    } else {
+      $('.flh5p-modal__next').show();
+      $('.flh5p-modal__finished').hide();
+      // If next step have an image load it into next-button, else just write next
+      if (this.steps[index + 1].config.icon) {
+        const $icon = $('<img>', { src: H5P.getPath(this.steps[index + 1].config.icon.path, this.id) });
+        $('.flh5p-modal__next').html($icon);
+      } else {
+        $('.flh5p-modal__next').html('Next');
+      }
+    }
+
     this.activeStep.on('taskCompleted', () => {
-      // console.log('activeStep triggered taskCompleted');
-      // console.log(index);
     });
     this.activeStep.on('stepCompleted', () => {
       self.completeStep(index);
-      // self.leaveStep();
-      // console.log(self.activeIndex);
       self.stepsNav[self.activeIndex].removeNext();
       if (self.stepsNav[self.activeIndex + 1]) {
         self.stepsNav[self.activeIndex + 1].setAsNext();
       }
     });
-    /* const step = this.contentInstances[index];
-    if (step.trigger) {
-      step.on('xAPI', (event: any) => {
-        const { statement }= event.data;
-        console.log(statement);
-        if (statement.result && statement.result.completion) {
-          // Task was finished, check what to do next
-          console.log('task finished');
-          console.log(step);
-        }
-      });
-    }
-    step.attach(this.$taskcontainer);
-    this.activeInstance = step;
-     */
   }
 
   completeStep = (index: number) => {
@@ -155,8 +162,28 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     }
   }
 
+  restartStep = () => {
+    this.activeStep.restart();
+  }
+
+  handleNextClick = () => {
+    const step = this.activeStep;
+    const index = this.activeIndex;
+    const steps = this.steps;
+    if (steps[index + 1]) {
+      step.close();
+      this.$taskcontainer.each(function () {
+        $(this).children().detach();
+      });
+      this.$taskcontainer.removeClass();
+      this.$taskcontainer.addClass('flh5p-task');
+      this.loadStep(index + 1);
+    } else {
+      this.leaveStep();
+    }
+  }
+
   goToNextTask = () => {
-    console.log(this);
     this.activeStep.goToNextTask();
   }
 
