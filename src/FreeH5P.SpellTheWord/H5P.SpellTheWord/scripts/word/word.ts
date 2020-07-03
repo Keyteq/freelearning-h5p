@@ -117,6 +117,7 @@ export default class Word extends H5P.EventDispatcher {
     const $scorebtn = H5P.JoubelUI.createButton({
       title: 'Get score',
       html: 'Score',
+      class: 'flh5p-button--score',
       click: function () {
         self.calculateScore();
       }
@@ -125,6 +126,7 @@ export default class Word extends H5P.EventDispatcher {
     const $resetbtn = H5P.JoubelUI.createButton({
       title: 'Reset task',
       html: 'Reset',
+      class: 'flh5p-button--reset',
       click: function () {
         self.reset();
         self.show();

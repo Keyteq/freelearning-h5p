@@ -77,6 +77,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     const $resetbtn = H5P.JoubelUI.createButton({
       title: 'Reset game',
       html: 'Reset',
+      class: 'flh5p-button--reset',
       click: function() {
         self.resetTask();
       }
@@ -141,6 +142,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
 
       if (self.activeWordIndex < self.renderedWords.length - 1) {
         self.$nextButton.html('Next');
+        self.$nextButton.removeClass('flh5p-button--score');
       }
     }
   }
@@ -157,8 +159,8 @@ export default class SpellTheWord extends H5P.EventDispatcher {
       self.$processbar.next();
       // Update some state on the buttons
       if (!words[index + 2]) {
-        console.log('Disable ', this);
         self.$nextButton.html('Score');
+        self.$nextButton.addClass('flh5p-button--score');
       }
     }
   }
@@ -185,6 +187,7 @@ export default class SpellTheWord extends H5P.EventDispatcher {
     this.$processbar.setProgress(1);
     if (this.renderedWords.length !== 1) {
       this.$nextButton.html('Next');
+      this.$nextButton.removeClass('flh5p-button--score');
     }
     this.toggleScorebar();
   }
@@ -193,8 +196,6 @@ export default class SpellTheWord extends H5P.EventDispatcher {
   calculateScore = () => {
     // console.log('calculateScore for all!');
     const points = this.renderedWords.map((word: Word) => {
-      console.log(word);
-      console.log(word.calculateScore());
       return word.calculateScore();
     });
 

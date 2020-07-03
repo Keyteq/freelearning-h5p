@@ -6,6 +6,84 @@
     padding: $spacing-2;
     font-family: $font-family;
     color: $text-default;
+
+    .h5p-joubelui-progressbar {
+      height: 12px;
+      border-radius: 100px;
+      background: #D4F2EF;
+      box-shadow: none;
+      height: 12px;
+      margin-top: $spacing-2;
+      .h5p-joubelui-progressbar-background {
+        border-radius: inherit;
+        background: #2DC08B;
+      }
+    }
+    button {
+      font-family: $font-family;
+      background: transparent;
+      height: 48px;
+      padding: $spacing $spacing-2;
+      box-sizing: border-box;
+      border: 1px solid $ui-peach;
+      border-radius: 100px;
+      color: $text-default;
+      font-weight: 600;
+      font-size: 16px;
+
+      &:after, &:before {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: no-repeat center center;
+        background-size: 90%;
+        vertical-align: middle;
+        padding-right: 0;
+      }
+
+      &:after {
+        margin-left: $spacing;
+      }
+
+      &:before {
+        margin-right: $spacing;
+      }
+
+      &:hover, &:focus, &:active {
+        cursor: pointer;
+        box-shadow: 0px 4px 10px rgba(255, 142, 106, 0.3);
+        background: inherit;
+        color: $text-default;
+      }
+
+      &.flh5p-nav-button--next {
+        &:after {
+          background-image: url('assets/images/arrow-narrow-right.svg');
+          content: "";
+        }
+      }
+      &.flh5p-nav-button--prev {
+        &:before {
+          background-image: url('assets/images/arrow-narrow-left.svg');
+          content: "";
+        }
+      }
+
+      &.flh5p-button--score {
+        background-color: $ui-peach;
+        &:after {
+          background-image: url('assets/images/check.svg');
+          content: "";
+        }
+      }
+
+      &.flh5p-button--reset {
+        &:after {
+          background-image: url('assets/images/refresh.svg');
+          content: "";
+        }
+      }
+    }
   }
 
   &-letters {
@@ -39,8 +117,8 @@
 
   &-navigation {
     display: block;
-    height: 64px;
-    line-height: 64px;
+    height: 88px;
+    line-height: 88px;
     position: relative;
   }
 
@@ -61,7 +139,7 @@
 
   &-scorebar {
     padding: $spacing-3 0;
-    
+
     &--hidden {
       visibility: hidden;
       display: none;

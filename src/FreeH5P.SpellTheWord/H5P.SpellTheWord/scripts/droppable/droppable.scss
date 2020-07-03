@@ -5,25 +5,35 @@
   height: 48px;
   flex: 0 0 48px;
   margin-right: 8px;
-  border-radius: 8px;
-  background: #FFFFFF;
-  box-shadow: 0px 4px 8px rgba(24, 27, 94, 0.07);
-  border: 1px solid #e7e7e7;
+  // box-shadow: 0px 4px 8px rgba(24, 27, 94, 0.07);
+  // border: 1px solid #e7e7e7;
   font-size: 18px;
   line-height: 48px;
   font-weight: 600;
+  background: #FFFFFF;
+  border: 2px dashed #DADCE7;
+  border-radius: 4px;
+
+  &.contains-draggable {
+    border-color: $ui-peach;
+
+    .flh5p-draggable {
+      background: transparent;
+      box-shadow: none;
+    }
+  }
 
   // States for score
   &.h5p-correct {
     border: none;
     box-shadow: none;
-    background-color: #b6e4ce;
-    border-color: #b6e4ce;
-    color: #255c41;
+    background-color: #8DDFC2;
+    border-color: #8DDFC2;
+    color: $text-default;
     &:after {
       content: "\f00c";
       background: #b6e4ce;
-      color: #255c41;
+      color: $text-default;
     }
     > div, > span {
       background-color: #b6e4ce;
@@ -34,21 +44,22 @@
   }
 
   &.h5p-wrong {
-    color: #b71c1c;
-    background: #fbd7d8;
-    border-color: #fbd7d8;
+    color: $text-default;
+    background: #FFC0C0;
+    border-color: #FFC0C0;
     box-shadow: 0 0.1em 0 #deb8b8;
+    border: none;
     &:after {
       content: "\f00d";
     }
     > div, > span {
-      color: #b71c1c;
-      background: #fbd7d8;
-      border-color: #fbd7d8;
+      color: $text-default;
+      background: #FFC0C0;
+      border-color: #FFC0C0;
       box-shadow: 0 0.1em 0 #deb8b8;
     }
   }
-  
+
   &.h5p-wrong, &.h5p-correct {
     position: relative;
     &:after {

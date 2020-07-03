@@ -3,7 +3,7 @@
   "description": "A content type that allows you to spell out a word using drag and drop",
   "majorVersion": 1,
   "minorVersion": 0,
-  "patchVersion": 9,
+  "patchVersion": 10,
   "runnable": 1,
   "author": "Norad",
   "license": "cc-by-sa",
