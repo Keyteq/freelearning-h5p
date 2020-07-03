@@ -40,7 +40,6 @@ class FLH5PDroppable extends (H5P.EventDispatcher as { new(): any; }) {
     $(target).append(ui.draggable[0]);
     self.textValue = ui.draggable[0].textContent;
     self.$droppedElement = ui.draggable[0];
-    console.log('Dropped!');
     if (!self.$element.hasClass('contains-draggable')) {
       self.$element.addClass('contains-draggable');
     }

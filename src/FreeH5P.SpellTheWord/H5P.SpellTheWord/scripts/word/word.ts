@@ -157,6 +157,9 @@ export default class Word extends H5P.EventDispatcher {
     }
     if (firstFreeDropzone) {
       firstFreeDropzone.$element.append(data.event.toElement);
+      if (!firstFreeDropzone.$element.hasClass('contains-draggable')) {
+        firstFreeDropzone.$element.addClass('contains-draggable');
+      }
     }
   }
 
