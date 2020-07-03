@@ -1,0 +1,208 @@
+@import 'variables';
+// Custom styling for drag text types
+.flh5p-task.h5p-drag-text {
+  display: flex !important;
+  flex-wrap: wrap;
+
+  .h5p-drag-task {
+    display: inline-flex;
+    flex: 1 0 100%;
+    flex-wrap: wrap;
+  }
+
+  [aria-dropeffect] {
+    background-color: transparent;
+    // padding: 0.1em 4em 0.1em 0;
+  }
+
+  .h5p-drag-draggables-container {
+    flex: 1 0 100%;
+    text-align: center;
+    order: 2;
+    .ui-draggable {
+      background: #F6F7FF;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.32);
+      border-radius: 4px;
+      font-size: 20px;
+      line-height: 27px;
+      border: none;
+
+      &:hover {
+        border: none;
+        background: lighten(#F6F7FF, 10);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.32);
+      }
+    }
+  }
+
+  .h5p-drag-droppable-words {
+    font-size: 20px;
+    line-height: 40px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: $spacing-4;
+
+    .h5p-drag-dropzone-container {
+      background: transparent;
+      /* UI/4 */
+      border: 2px dashed #DADCE7;
+      border-radius: 4px;
+      &[aria-dropeffect] {
+        background-color: none;
+      }
+
+      .ui-draggable {
+        border: none;
+        background: transparent;
+      }
+    }
+  }
+
+  .h5p-question-content {
+    margin: $spacing-2 auto 0;
+  }
+
+  .h5p-question-introduction {
+    order: 2;
+    flex: 1 0 100%;
+    text-align: center;
+    color: #515672;
+    margin-top: 0px;
+    height: 40px;
+  }
+
+  .h5p-question-buttons {
+    order: 3;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+
+    button {
+      font-family: $font-family;
+      font-size: 16px;
+      font-weight: 600;
+      color: $text-default;
+      vertical-align: middle;
+      height: 48px;
+      padding: $spacing $spacing-2;
+      box-sizing: border-box;
+
+      &:hover {
+        cursor: pointer;
+        box-shadow: 0px 4px 10px rgba(255, 142, 106, 0.3);
+      }
+
+      &:before {
+        display: none;
+      }
+
+      &:after {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+        margin-left: $spacing;
+      }
+    }
+
+    .h5p-question-show-solution {
+      border: 1px solid $ui-peach;
+      background: $white;
+      &:after {
+        background: url('assets/images/eye.svg') no-repeat center 95%;
+        content: "";
+      }
+    }
+
+    .h5p-question-try-again {
+      border: 1px solid $ui-peach;
+      background: $white;
+      display: none;
+      visibility: hidden;
+
+      &:after {
+        background: url('assets/images/refresh.svg') no-repeat center 95%;
+        content: "";
+      }
+    }
+
+    .h5p-question-check-answer {
+      background: $ui-peach;
+      height: 48px;
+      padding: $spacing $spacing-2;
+      box-sizing: border-box;
+
+      &:hover {
+        cursor: pointer;
+        box-shadow: 0px 4px 10px rgba(255, 142, 106, 0.3);
+      }
+
+      &:before {
+        display: none;
+      }
+      &:after {
+        content: "";
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: url('assets/images/check.svg') no-repeat center 95%;
+        vertical-align: middle;
+        margin-left: $spacing;
+      }
+    }
+  }
+
+  .h5p-question-scorebar {
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .h5p-drag-wrong-feedback, .h5p-drag-correct-feedback {
+    vertical-align: middle;
+    color: $text-default;
+    &:before {
+      display: none;
+    }
+    &:after {
+      content: "";
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: $spacing;
+      background: no-repeat center center;
+      background-size: 90%;
+      position: absolute;
+    }
+  }
+
+  .h5p-drag-correct-feedback {
+    background: #8DDFC2;
+    &:after {
+      background-image: url('assets/images/check.svg');
+    }
+  }
+
+  .h5p-drag-wrong-feedback {
+    background: #FFC0C0;
+    &:after {
+      background-image: url('assets/images/close-dark.svg');
+    }
+  }
+
+  .h5p-drag-dropped {
+    .h5p-drag-draggable-correct, .h5p-drag-draggable-wrong {
+      color: $text-default;
+    }
+  }
+  // Styling for focus/dragged states
+  [aria-grabbed]:not(.ui-state-disabled):hover {
+    color: $text-default !important;
+  }
+
+  .flh5p-task.h5p-drag-text .h5p-drag-draggables-container .ui-draggable:hover {
+    background: lighten(#F6F7FF, 7);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.32);
+    color: $text-default !important;
+  }
+}

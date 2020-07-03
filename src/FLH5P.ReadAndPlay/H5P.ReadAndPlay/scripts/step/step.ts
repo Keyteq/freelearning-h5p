@@ -51,7 +51,8 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     } else {
       $('.flh5p-button--next').hide();
     }
-    $('.flh5p-button--step-restart').show();
+
+    $('.flh5p-button--step-restart').hide();
 
     switch (instance.libraryInfo.machineName) {
       case 'H5P.IFrameEmbed':
@@ -141,6 +142,19 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
 
   restart() {
     console.log('restart ', this);
+    this.completed = false;
+    this.activeTask = 0;
+    this.activeIndex = 0;
+    this.emptyContainer();
+    this.runnableInstances = [];
+
+    this.runnableInstances = this.config.tasks.map((task: any) => {
+      task.params = task.params || {};
+      const instance = H5P.newRunnable(task, H5PData.id);
+      return instance;
+    });
+
+    this.loadTask(0);
   }
 
   reset() {
@@ -149,6 +163,13 @@ export default class Step extends (H5P.EventDispatcher as { new(): any; }) {
     this.activeIndex = 0;
     this.close();
     this.emptyContainer();
+    this.runnableInstances = [];
+
+    this.runnableInstances = this.config.tasks.map((task: any) => {
+      task.params = task.params || {};
+      const instance = H5P.newRunnable(task, H5PData.id);
+      return instance;
+    });
   }
 
   emptyContainer() {

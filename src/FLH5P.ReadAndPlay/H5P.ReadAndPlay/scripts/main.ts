@@ -221,7 +221,7 @@ export default class ReadAndPlay extends H5P.EventDispatcher {
     });
 
     const restartBtn = $('<button>', {
-      class: 'flh5p-button flh5p-button--restart',
+      class: 'flh5p-button flh5p-button--step-restart',
       html: 'Go again',
       click: this.resetAll,
     });
